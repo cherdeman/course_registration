@@ -5,10 +5,10 @@
 # This document contains preliminary unit tests
 import pytest
 
-from person_classes import *
+from classes.person_classes import *
 
 
-existing_classes = [Person(), Student(), Instructor(), Course(), Section(), Lab(), Building(), Room(), TimeSlot(), Search()]
+existing_classes = [Person("cherdeman"), Student("cherdeman"), Instructor(), Course(), Section(), Lab(), Building(), Room(), TimeSlot(), Search()]
 person_subclasses = [Student, Instructor]
 course_subclasses = [Section, Lab]
 building_subclasses = [Room]
@@ -31,7 +31,7 @@ def test_building_subclass(building_class):
 	assert issubclass(building_class, Building)
 
 # Tests specific to person class
-test_person = Person()
+test_person = Person("cherdeman")
 
 def test_person_name():
 	assert hasattr(test_person, 'name')
