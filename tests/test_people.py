@@ -5,7 +5,7 @@
 # This document contains preliminary unit tests
 import pytest
 
-from mock_classes import *
+from person_classes import *
 
 
 existing_classes = [Person(), Student(), Instructor(), Course(), Section(), Lab(), Building(), Room(), TimeSlot(), Search()]
