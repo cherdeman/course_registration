@@ -6,6 +6,7 @@ from classes.person_classes import *
 # Initialize objects for testing
 test_student = Student("Claire", "Herdeman", 1)
 test_instructor = Instructor("A", "Professor", 2)
+test_faculty = Faculty("B", "Professor", 3)
 
 existing_classes = [test_student, test_instructor]
 person_subclasses = [Student, Instructor]

@@ -32,9 +32,42 @@ class Person(ABC):
 		input("")
 
 class Student(Person):
-
-	def searchCourse(self):
+	def __init__():
 		pass
 
+	def addCourse():
+		pass
+
+	def dropCourse():
+		pass
+
+	def viewCourses():
+		pass
+
+	def viewGrades():
+		pass
+
+
 class Instructor(Person):
-	pass
+	def __init__():
+		pass
+
+	def viewRoster():
+		pass
+
+	def updateGrades():
+		pass
+
+
+class Faculty(Instructor):
+	def __init__():
+		pass
+
+	def manageRequests():
+		pass
+
+	def requestRoster():
+		pass
+
+	def changeCourseDetails():
+		pass
