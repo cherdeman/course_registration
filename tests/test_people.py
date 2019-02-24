@@ -1,19 +1,16 @@
-# Claire Herdeman
-# OOP: Practicum 1
-# February 11, 2019
+# This document contains unit for person-related classes
 
-# This document contains preliminary unit tests
 import pytest
-
 from classes.person_classes import *
 
+# Initialize objects for testing
+test_student = Student("Claire", "Herdeman", 1)
+test_instructor = Instructor("A", "Professor", 2)
 
-existing_classes = [Person("cherdeman"), Student("cherdeman"), Instructor(), Course(), Section(), Lab(), Building(), Room(), TimeSlot(), Search()]
+existing_classes = [test_student, test_instructor]
 person_subclasses = [Student, Instructor]
-course_subclasses = [Section, Lab]
-building_subclasses = [Room]
 
-# Parametrized tests for all classes
+# Parametrized tests for all person  classes
 @pytest.mark.parametrize('test_class', existing_classes)
 def test_constructor(test_class):
 	assert len(test_class.__dict__) > 0
@@ -22,25 +19,34 @@ def test_constructor(test_class):
 def test_person_subclass(person_class):
 	assert issubclass(person_class, Person)
 
-@pytest.mark.parametrize('course_class', course_subclasses)
-def test_course_subclass(course_class):
-	assert issubclass(course_class, Course)
+# Tests specific to student class
+def test_student_firstname():
+	assert test_student.firstname == "Claire"
 
-@pytest.mark.parametrize('building_class', building_subclasses)
-def test_building_subclass(building_class):
-	assert issubclass(building_class, Building)
+def test_student_lastname():
+	assert test_student.lastname == "Herdeman"
 
-# Tests specific to person class
-test_person = Person("cherdeman")
+def test_student_username():
+	assert test_student.username == "cherdeman"
 
-def test_person_name():
-	assert hasattr(test_person, 'name')
+def test_student_id():
+	assert test_student._id == 1
 
-def test_person_id():
-	assert hasattr(test_person, '_id')
+def test_student_password():
+	assert test_student._password == "temp"
 
-def test_person_username():
-	assert hasattr(test_person, 'username')
+# Tests specific to instructor class
+def test_instructor_firstname():
+	assert test_instructor.firstname == "A"
 
-def test_person_password():
-	assert hasattr(test_person, 'password')
+def test_student_lastname():
+	assert test_instructor.lastname == "Professor"
+
+def test_student_username():
+	assert test_instructor.username == "aprofessor"
+
+def test_student_id():
+	assert test_instructor._id == 2
+
+def test_student_password():
+	assert test_instructor._password == "temp"

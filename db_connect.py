@@ -1,6 +1,7 @@
+# Database connection untility file
+
 from sqlalchemy import create_engine
 from sqlalchemy.engine.url import URL
-from sqlalchemy.pool import QueuePool
 
 def connect():
         dburl = URL(
@@ -13,9 +14,3 @@ def connect():
         return create_engine(dburl)
 
 conn = connect()
-
-def execute_query(query, columns=None, verbose=False):
-    if verbose:
-        print("Query is ", query)
-    query = """SET ROLE {}; {};""".format(role, query)
-    return pd.read_sql(query, conn)
