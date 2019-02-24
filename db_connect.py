@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.engine.url import URL
 from sqlalchemy.pool import QueuePool
 
-def connect(poolclass=QueuePool):
+def connect():
         dburl = URL(
             "mysql",
             host="localhost",
@@ -10,7 +10,7 @@ def connect(poolclass=QueuePool):
             database="reggie",
             port=3306,
         )
-        return create_engine(dburl, poolclass=poolclass)
+        return create_engine(dburl)
 
 conn = connect()
 
