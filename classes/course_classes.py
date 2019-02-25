@@ -22,10 +22,9 @@ class Course:
 
 
 	def dropCourse(self, studentid):
-		updated_enrollees = [student for student in self.enrollees if student != studentid]
-		if len(updated_enrollees) == 0:
-			updated_enrollees = None
-		self.enrollees = updated_enrollees
+		self.enrollees.remove(studentid)
+		if len(self.enrollees) == 0:
+			self.enrollees = None
 
 	def addMediator(self, reg_mediator):
 		if self._reg_mediator is None:

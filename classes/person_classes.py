@@ -35,8 +35,6 @@ class Person(ABC):
 class Student(Person):
 	def __init__(self, firstname, lastname):
 		super(Student, self).__init__(firstname, lastname)
-		# instantiating mediator first won't make sense in practice!
-		# Needs to make sense how to find the course object
 		self._reg_mediator = None
 		self.currentCourses = None
 
@@ -44,12 +42,12 @@ class Student(Person):
 		self.addMediator(course_obj)
 
 		if self._reg_mediator.isCourseAvailable() and \
-		   self.currentCourses is None or self.currentCourses < 3: # leave as 3 for now, should be a var and based on FT/PT
+		   self.currentCourses is None or len(self.currentCourses) < 3: # leave as 3 for now, should be a var and based on FT/PT
 		   self._reg_mediator.addCourse()
 
 	def dropCourse(self, course_obj):
 		self.addMediator(course_obj)
-		
+
 		self._reg_mediator.dropCourse()
 
 	def _add(self, courseid):
@@ -58,10 +56,9 @@ class Student(Person):
 		self.currentCourses.append(courseid)
 
 	def _drop(self, courseid):
-		updated_courses = [course for course in self.currentCourses if course != courseid]
-		if len(updated_courses) == 0:
-			updated_courses = None
-		self.currentCourses = updated_courses
+		self.currentCourses.remove(courseid)
+		if len(self.currentCourses) == 0:
+			self.currentCourses = None
 
 	def dropAllCourses(self, course_obj):
 		self.addMediator(course_obj)
