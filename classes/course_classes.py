@@ -1,12 +1,13 @@
 # Course class definitions
 
 class Course:
-	def __init__(self, _id, title, department, enrollment_limit):
+	def __init__(self, _id, title, department, enrollment_limit, reg_mediator):
 		self._id = _id# the course number
 		self.title = title
 		self.department = department
 		self.faculty = Faculty()
 		self.enrollment_limit = enrollment_limit
+		self._reg_mediator = reg_mediator
 		self.description = None
 		self.instructor = None
 		self.enrollees = None

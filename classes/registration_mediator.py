@@ -23,7 +23,7 @@ class RegistrationMediator():
 		confirm = input("Are you sure you want to add {}? (y/n)".format(self._course.title))
 		if confirm == "y":
 			self._course.addCourse(self._student._id)
-			self._student.add(self._course._id)
+			self._student._add(self._course._id)
 			print("You are enrolled in {}.".format(self._course.title))
 		else:
 			print("Ok, you are NOT be enrolled in {}.".format(self._course.title))
@@ -37,6 +37,6 @@ class RegistrationMediator():
 
 		confirm = input("Are you sure you want to drop {}? (y/n)".format(self._course.title))
 		if confirm == "y":
-			self._student.drop()
+			self._student._drop()
 			self._course.dropCourse()
 			print("You have dropped {}.".format(self._course.title))

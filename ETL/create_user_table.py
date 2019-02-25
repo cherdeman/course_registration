@@ -30,14 +30,15 @@ load_users_infile = """LOAD DATA LOCAL INFILE '../data/user_data.csv'
 
 # Course table queries
 create_courses = """CREATE TABLE IF NOT EXISTS courses (
-					id			int 			NOT NULL,
+					id			varchar(10)		NOT NULL,
 					title		varchar(50) 	NOT NULL,
-					department  varchar(20) 	NOT NULL,
+					dept  		varchar(20) 	NOT NULL,
+					enrollment_limit int.       NOT NULL
 					PRIMARY KEY(id) 
 				);"""
 
-load_courses = """INSERT INTO courses (id, title, department) 
-				  VALUES (10100, "Object Oriented Programming",  "CS");
+load_courses = """INSERT INTO courses (id, title, department, enrollment_limit) 
+				  VALUES ("10100", "Object Oriented Programming",  "CS", 30);
 			   """
 
 # Establish db connection
