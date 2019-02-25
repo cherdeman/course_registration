@@ -2,14 +2,15 @@
 
 from db_connect import connect
 
-# Define queries
+# General Queries
 drop = "DROP TABLE IF EXISTS {} CASCADE;"
 
+# User table queries
 create_users = """CREATE TABLE IF NOT EXISTS users (
-	firstname   text    NOT NULL,
-	lastname	text	NOT NULL,
-	id			int  	NOT NULL,
-	attributes  JSON	NOT NULL,
+	firstname   varchar(20)    NOT NULL,
+	lastname	varchar(20)	   NOT NULL,
+	id			int  		   NOT NULL,
+	attributes  JSON		   NOT NULL,
 	PRIMARY KEY(id) 
 );"""
 
@@ -27,10 +28,26 @@ load_users_infile = """LOAD DATA LOCAL INFILE '../data/user_data.csv'
 				LINES TERMINATED BY '\n'
 				IGNORE 1 LINES;"""
 
+# Course table queries
+create_courses = """CREATE TABLE IF NOT EXISTS courses (
+					id			int 			NOT NULL,
+					title		varchar(50) 	NOT NULL,
+					department  varchar(20) 	NOT NULL,
+					PRIMARY KEY(id) 
+				);"""
+
+load_courses = """INSERT INTO courses (id, title, department) 
+				  VALUES (10100, "Object Oriented Programming",  "CS");
+			   """
+
 # Establish db connection
 conn = connect()
 
-# Execute queriess
+# Execute queries
 conn.execute(drop.format('users'))
 conn.execute(create_users)
 conn.execute(load_users)
+
+conn.execute(drop.format('courses'))
+conn.execute(create_courses)
+conn.execute(load_courses)

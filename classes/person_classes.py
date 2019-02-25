@@ -4,10 +4,10 @@ from abc import ABC
 
 class Person(ABC):
 	def __init__(self, firstname, lastname, _id):
+		self._id = _id
 		self.firstname = firstname
 		self.lastname = lastname
 		self.username = self.generateUsername()
-		self._id = _id
 		self._password = 'temp'
 
 	def generateUsername(self):
@@ -32,14 +32,28 @@ class Person(ABC):
 		input("")
 
 class Student(Person):
-	def __init__():
-		pass
+	def __init__(self, firstname, lastname, _id, reg_mediator):
+		super(Student, self).__init__(firstname, lastname, _id)
+		self._reg_mediator = reg_mediator
+		self.currentCourses = None
 
-	def addCourse():
-		pass
+	def addCourse(courseid):
+		if self._reg_mediator.isCourseAvailable() and \
+		   (self.currentCourses is None or self.currentCourses < 3): # leave as 3 for now, should be a var and based on FT/PT
+		   self._reg_mediator.addCourse()
 
-	def dropCourse():
-		pass
+	def add(courseid):
+		if self.currentCourses is None:
+			self.currentCourses = []
+		self.currentCourses.append(courseid)
+
+	def drop(courseid):
+		updated_courses = [course in self.currentCourses if course != courseid]
+		if len(updated_courses) == 0:
+			updated_courses = None
+		self.currentCourses = updated_courses
+
+	def dropAllCourses():
 
 	def viewCourses():
 		pass
@@ -49,8 +63,8 @@ class Student(Person):
 
 
 class Instructor(Person):
-	def __init__():
-		pass
+	def __init__(self, firstname, lastname, _id):
+		super(Instructor, self).__init__(firstname, lastname, _id)
 
 	def viewRoster():
 		pass
@@ -60,8 +74,8 @@ class Instructor(Person):
 
 
 class Faculty(Instructor):
-	def __init__():
-		pass
+	def __init__(self, firstname, lastname, _id):
+		super(Faculty, self).__init__(firstname, lastname, _id)
 
 	def manageRequests():
 		pass
