@@ -1,7 +1,6 @@
 # Person class definitions
 
 from abc import ABC
-from registration_mediator import RegistrationMediator
 
 class Person(ABC):
 	idnum = 100000
@@ -85,8 +84,8 @@ class Student(Person):
 
 
 class Instructor(Person):
-	def __init__(self, firstname, lastname, _id):
-		super(Instructor, self).__init__(firstname, lastname, _id)
+	def __init__(self, firstname, lastname):
+		super(Instructor, self).__init__(firstname, lastname)
 
 	def viewRoster():
 		pass
@@ -96,8 +95,8 @@ class Instructor(Person):
 
 
 class Faculty(Instructor):
-	def __init__(self, firstname, lastname, _id):
-		super(Faculty, self).__init__(firstname, lastname, _id)
+	def __init__(self, firstname, lastname):
+		super(Faculty, self).__init__(firstname, lastname)
 
 	def manageRequests():
 		pass

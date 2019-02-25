@@ -1,6 +1,6 @@
 # Registration Mediator
-from person_classes import Student
-from course_classes import Course
+from classes.person_classes import Student
+from classes.course_classes import Course
 
 class RegistrationMediator():
 	def __init__(self):

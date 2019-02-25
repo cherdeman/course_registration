@@ -2,11 +2,12 @@
 
 import pytest
 from classes.person_classes import *
+import classes.registration_mediator
 
 # Initialize objects for testing
-test_student = Student("Claire", "Herdeman", 1)
-test_instructor = Instructor("A", "Professor", 2)
-test_faculty = Faculty("B", "Professor", 3)
+test_student = Student("Claire", "Herdeman")
+test_instructor = Instructor("A", "Professor")
+test_faculty = Faculty("B", "Professor")
 
 existing_classes = [test_student, test_instructor]
 person_subclasses = [Student, Instructor]
@@ -30,8 +31,11 @@ def test_student_lastname():
 def test_student_username():
 	assert test_student.username == "cherdeman"
 
+def test_student_username():
+	assert test_student.password == "temp"
+
 def test_student_id():
-	assert test_student._id == 1
+	assert test_student.idnum > 100001
 
 def test_student_password():
 	assert test_student._password == "temp"
@@ -47,7 +51,10 @@ def test_student_username():
 	assert test_instructor.username == "aprofessor"
 
 def test_student_id():
-	assert test_instructor._id == 2
+	assert test_instructor.password == "temp"
+
+def test_student_id():
+	assert test_instructor.idnum > 100002
 
 def test_student_password():
 	assert test_instructor._password == "temp"
