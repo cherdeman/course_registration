@@ -2,7 +2,8 @@
 
 import pytest
 from classes.person_classes import *
-import classes.registration_mediator
+#from classes.registration_mediator import RegistrationMediator
+from classes.course_classes import Course
 
 # Initialize objects for testing
 test_student = Student("Claire", "Herdeman")
@@ -39,6 +40,19 @@ def test_student_id():
 
 def test_student_password():
 	assert test_student._password == "temp"
+
+def test_student_add():
+	test_student._add(1234)
+	assert test_student.currentCourses == [1234]
+
+def test_student_drop():
+	test_student._drop(1234)
+	assert test_student.currentCourses is None
+
+# def test_student_addMediator():
+# 	test_course = Course(1, "Object Oriented Programming", "CS", 30)
+# 	test_student.addMediator(test_course)
+# 	assert test_student._reg_mediator == RegistrationMediator()
 
 # Tests specific to instructor class
 def test_instructor_firstname():

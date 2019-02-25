@@ -3,6 +3,11 @@
 from abc import ABC
 
 class Person(ABC):
+	"""
+	This is an abstract Person class that is a super class for all 
+	student/instuctor classes
+	"""
+	# This will generate a unique id for each user in the system
 	idnum = 100000
 
 	def __init__(self, firstname, lastname):
@@ -32,6 +37,9 @@ class Person(ABC):
 			return 
 
 class Student(Person):
+	"""
+	Class representing student
+	"""
 	def __init__(self, firstname, lastname):
 		super(Student, self).__init__(firstname, lastname)
 		self._reg_mediator = None
@@ -60,10 +68,10 @@ class Student(Person):
 			self.currentCourses = None
 
 	def dropAllCourses(self, course_obj):
-		self.addMediator(course_obj)
+		pass
 
-		for course in self.currentCourses:
-			self._reg_mediator.dropCourse()
+		# for course in self.currentCourses:
+		# 	self._reg_mediator.dropCourse()
 
 	def viewCourses():
 		pass
@@ -72,13 +80,14 @@ class Student(Person):
 		pass
 
 	def addMediator(self, course_obj):
+		# instantiate mediator
 		reg_mediator = RegistrationMediator()
-		#this line at least needs to be called elsewhere
-		course_obj.addMediator(reg_mediator)
 		
+		# add mediator to current student
 		if self._reg_mediator is None:
 			self._reg_mediator = reg_mediator
 
+		# register course/student with mediator
 		reg_mediator.getStudent(self)
 		reg_mediator.getCourse(course_obj)
 

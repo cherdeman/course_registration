@@ -13,6 +13,9 @@ class RegistrationMediator():
 			self._student = student
 
 	def getCourse(self, course):
+		# Add mediator to course prior to registration
+		course.addMediator(self)
+
 		if self._course is None:
 			self._course = course
 
