@@ -20,6 +20,8 @@ student_name = 'student'
 student_fields = """studentid   int            NOT NULL,
 				   firstname   varchar(20)    NOT NULL,
 				   lastname	   varchar(20)	   NOT NULL,
+				   username    varchar(21),
+				   password    varchar(20),
 			       PRIMARY KEY(studentid)
 			     """
 student_cols = '(studentid, firstname, lastname)'
@@ -34,6 +36,8 @@ instructor_fields = """instructorid   int            NOT NULL,
 							firstname      varchar(20)    NOT NULL,
 							lastname	   varchar(20)	  NOT NULL,
 							dept_code      int            NOT NULL,
+							username    varchar(21),
+				   			password    varchar(20),
 							PRIMARY KEY(instructorid)
 					"""
 instructor_cols = '(instructorid, firstname, lastname, dept_code)'

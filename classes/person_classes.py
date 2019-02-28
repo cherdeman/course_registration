@@ -16,7 +16,11 @@ class Person(ABC):
 		self._password = None #'temp'
 
 	def generateUsername(self):
+		#conn = connect()
 		self.username = self.firstname[0].lower() + self.lastname.lower()
+		#conn.execute("")
+
+
 
 	def changePassword(self):
 		option = input("Would you like to change your password? (y/n) ")
@@ -95,8 +99,8 @@ class Student(Person):
 class Instructor(Person):
 	def __init__(self): #self, firstname, lastname, instructorid, dept_code):
 		super(Instructor, self).__init__() #firstname, lastname)
-		self._instructorid = instructorid
-		self.dept_code = dept_code
+		self._instructorid = None
+		self.dept_code = None
 
 	def viewRoster():
 		pass
@@ -106,8 +110,8 @@ class Instructor(Person):
 
 
 class Faculty(Instructor):
-	def __init__(self, firstname, lastname):
-		super(Faculty, self).__init__(firstname, lastname)
+	def __init__(self): #, firstname, lastname):
+		super(Faculty, self).__init__() #firstname, lastname)
 
 	def manageRequests():
 		pass

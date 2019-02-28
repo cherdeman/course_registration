@@ -2,13 +2,33 @@
 
 import pytest
 from classes.person_classes import *
+from classes.person_builder import StudentBuilder, InstructorBuilder
 #from classes.registration_mediator import RegistrationMediator
 from classes.course_classes import Course
 
 # Initialize objects for testing
-test_student = Student("Claire", "Herdeman")
-test_instructor = Instructor("A", "Professor")
-test_faculty = Faculty("B", "Professor")
+sb = StudentBuilder()
+sb.person = Student()
+sb.getFirstname("Claire")
+sb.getLastname("Herdeman")
+sb.getUsername()
+sb.getPassword()
+sb.getId(100000)
+sb.getPastGrades({'fall18': (1, 10, "B")})
+sb.getCurrentCourses([])
+test_student = sb.getPerson()
+
+ib = InstructorBuilder()
+ib.person = Instructor()
+ib.getFirstname("A")
+ib.getLastname("Professor")
+ib.getUsername()
+ib.getPassword()
+ib.getId(200000)
+ib.getDeptCode(1)
+test_instructor = ib.getPerson()
+
+test_faculty = Faculty()
 
 existing_classes = [test_student, test_instructor]
 person_subclasses = [Student, Instructor]
@@ -32,11 +52,8 @@ def test_student_lastname():
 def test_student_username():
 	assert test_student.username == "cherdeman"
 
-def test_student_username():
-	assert test_student.password == "temp"
-
 def test_student_id():
-	assert test_student.idnum > 100001
+	assert test_student._studentid == 100000
 
 def test_student_password():
 	assert test_student._password == "temp"
@@ -58,17 +75,17 @@ def test_student_drop():
 def test_instructor_firstname():
 	assert test_instructor.firstname == "A"
 
-def test_student_lastname():
+def test_instructor_lastname():
 	assert test_instructor.lastname == "Professor"
 
-def test_student_username():
+def test_instructor_username():
 	assert test_instructor.username == "aprofessor"
 
-def test_student_id():
-	assert test_instructor.password == "temp"
-
-def test_student_id():
-	assert test_instructor.idnum > 100002
-
-def test_student_password():
+def test_instructor_password():
 	assert test_instructor._password == "temp"
+
+def test_instructor_id():
+	assert test_instructor._instructorid == 200000
+
+def test_instructor_code():
+	assert test_instructor.dept_code == 1

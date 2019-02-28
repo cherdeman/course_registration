@@ -3,9 +3,9 @@ from classes.person_builder import StudentBuilder, InstructorBuilder
 from classes.person_classes import Student, Instructor
 
 #
-student_query = """
+person_query = """
 				SELECT * 
-				FROM student
+				FROM {}
 				"""
 
 courses_query = """
@@ -15,7 +15,6 @@ courses_query = """
 				"""
 
 def make_students(conn, student_query, courses_query):
-
 	rs = conn.execute(student_query)
 	students = rs.fetchall()
 
@@ -56,11 +55,38 @@ def make_students(conn, student_query, courses_query):
 
 	return student_obj
 
+def make_instructors(conn, instructor_query):
+	rs = conn.execute(instructor_query)
+	instructors = rs.fetchall()
+
+	instructor_obj = {}
+	for instr in instructors:
+		instrid = instr[0]
+		firstname = instr[1]
+		lastname = instr[2]
+		dept_code = instr[3]
+
+		ib = InstructorBuilder()
+		ib.person = Instructor()
+		ib.getFirstname(firstname)
+		ib.getLastname(lastname)
+		ib.getUsername()
+		ib.getPassword()
+		ib.getId(instrid)
+		ib.getDeptCode(dept_code)
+		i = ib.getPerson()
+		instructor_obj[i._instructorid] = i
+
+	return instructor_obj
+
+
 def main():
 	conn = connect()
-	students = make_students(conn, student_query, courses_query)
-	print("made students {}".format(students.keys()))
-	print(students[100001].username)
+	students = make_students(conn, person_query.format('student'), courses_query)
+	#print("made students {}".format(students.keys()))
+	#print(students[100001].username)
+	instructors = make_instructors(conn, person_query.format('instructor'))
+	#print("made instructors {}".format(instructors.keys()))
 
 if __name__ == "__main__":
 	main()
