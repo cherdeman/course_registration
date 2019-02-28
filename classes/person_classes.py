@@ -1,6 +1,7 @@
 # Person class definitions
 
 from abc import ABC
+#from database.db_connect import connect
 
 class Person(ABC):
 	"""
@@ -8,17 +9,14 @@ class Person(ABC):
 	student/instuctor classes
 	"""
 	# This will generate a unique id for each user in the system
-	idnum = 100000
-
-	def __init__(self, firstname, lastname):
-		Person.idnum += 1
-		self.firstname = firstname
-		self.lastname = lastname
-		self.username = self.generateUsername()
-		self._password = 'temp'
+	def __init__(self): #(self, firstname, lastname):
+		self.firstname = None #firstname
+		self.lastname = None #lastname
+		self.username = None #self.generateUsername()
+		self._password = None #'temp'
 
 	def generateUsername(self):
-		return self.firstname[0].lower() + self.lastname.lower()
+		self.username = self.firstname[0].lower() + self.lastname.lower()
 
 	def changePassword(self):
 		option = input("Would you like to change your password? (y/n) ")
@@ -40,10 +38,12 @@ class Student(Person):
 	"""
 	Class representing student
 	"""
-	def __init__(self, firstname, lastname):
-		super(Student, self).__init__(firstname, lastname)
-		self._reg_mediator = None
+	def __init__(self): #self, studentid, firstname, lastname, pastGrades):
+		super(Student, self).__init__()# firstname, lastname)
+		self._studentid = None #studentid
 		self.currentCourses = None
+		self.pastGrades = None #pastGrades
+		self._reg_mediator = None
 
 	def addCourse(self, course_obj):
 		self.addMediator(course_obj)
@@ -93,8 +93,10 @@ class Student(Person):
 
 
 class Instructor(Person):
-	def __init__(self, firstname, lastname):
-		super(Instructor, self).__init__(firstname, lastname)
+	def __init__(self): #self, firstname, lastname, instructorid, dept_code):
+		super(Instructor, self).__init__() #firstname, lastname)
+		self._instructorid = instructorid
+		self.dept_code = dept_code
 
 	def viewRoster():
 		pass
