@@ -23,6 +23,8 @@ def make_students(conn, student_query, courses_query):
 		studentid = student[0]
 		firstname = student[1]
 		lastname = student[2]
+		username = student[3]
+		password = student[4]
 
 		pastGrades = {}
 		currentCourses = []
@@ -43,11 +45,11 @@ def make_students(conn, student_query, courses_query):
 
 		sb = StudentBuilder()
 		sb.person = Student()
+		sb.getId(studentid)
 		sb.getFirstname(firstname)
 		sb.getLastname(lastname)
-		sb.getUsername()
-		sb.getPassword()
-		sb.getId(studentid)
+		sb.getUsername(username)
+		sb.getPassword(password)
 		sb.getPastGrades(pastGrades)
 		sb.getCurrentCourses(currentCourses)
 		s = sb.getPerson()
@@ -65,14 +67,16 @@ def make_instructors(conn, instructor_query):
 		firstname = instr[1]
 		lastname = instr[2]
 		dept_code = instr[3]
+		username = instr[4]
+		password = instr[5]
 
 		ib = InstructorBuilder()
 		ib.person = Instructor()
+		ib.getId(instrid)
 		ib.getFirstname(firstname)
 		ib.getLastname(lastname)
-		ib.getUsername()
-		ib.getPassword()
-		ib.getId(instrid)
+		ib.getUsername(username)
+		ib.getPassword(password)
 		ib.getDeptCode(dept_code)
 		i = ib.getPerson()
 		instructor_obj[i._instructorid] = i

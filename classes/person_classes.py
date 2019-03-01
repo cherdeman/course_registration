@@ -1,27 +1,24 @@
 # Person class definitions
 
-from abc import ABC
-#from database.db_connect import connect
+from abc import ABC, abstractmethod
+from database.db_connect import connect, update
 
 class Person(ABC):
 	"""
 	This is an abstract Person class that is a super class for all 
 	student/instuctor classes
 	"""
-	# This will generate a unique id for each user in the system
-	def __init__(self): #(self, firstname, lastname):
-		self.firstname = None #firstname
-		self.lastname = None #lastname
-		self.username = None #self.generateUsername()
-		self._password = None #'temp'
+	def __init__(self): 
+		self.firstname = None 
+		self.lastname = None 
+		self.username = None 
+		self._password = None 
 
+	@abstractmethod
 	def generateUsername(self):
-		#conn = connect()
-		self.username = self.firstname[0].lower() + self.lastname.lower()
-		#conn.execute("")
+		return self.firstname[0].lower() + self.lastname.lower()
 
-
-
+	@abstractmethod
 	def changePassword(self):
 		option = input("Would you like to change your password? (y/n) ")
 		if option == 'y':
@@ -42,12 +39,20 @@ class Student(Person):
 	"""
 	Class representing student
 	"""
-	def __init__(self): #self, studentid, firstname, lastname, pastGrades):
-		super(Student, self).__init__()# firstname, lastname)
-		self._studentid = None #studentid
+	def __init__(self):
+		super(Student, self).__init__()
+		self._studentid = None 
 		self.currentCourses = None
-		self.pastGrades = None #pastGrades
+		self.pastGrades = None 
 		self._reg_mediator = None
+
+	def generateUsername(self):
+		self.username = super().generateUsername()
+		update(connect(), 'student', 'username', "'" + self.username + "'", 'studentid', self._studentid)
+
+	def changePassword(self):
+		super().changePassword()
+		update(connect(), 'student', 'password', self._password, 'studentid', self._studentid)
 
 	def addCourse(self, course_obj):
 		self.addMediator(course_obj)
@@ -97,10 +102,18 @@ class Student(Person):
 
 
 class Instructor(Person):
-	def __init__(self): #self, firstname, lastname, instructorid, dept_code):
-		super(Instructor, self).__init__() #firstname, lastname)
+	def __init__(self): 
+		super(Instructor, self).__init__() 
 		self._instructorid = None
 		self.dept_code = None
+
+	def generateUsername(self):
+		self.username = super().generateUsername()
+		update(connect(), 'instructor', 'username', '"'+self.username+'"', 'instructorid', self._instructorid)
+
+	def changePassword(self):
+		super().changePassword()
+		update(connect(), 'instructor', 'password', self._password, 'instructorid', self._instructorid)
 
 	def viewRoster():
 		pass
@@ -110,8 +123,8 @@ class Instructor(Person):
 
 
 class Faculty(Instructor):
-	def __init__(self): #, firstname, lastname):
-		super(Faculty, self).__init__() #firstname, lastname)
+	def __init__(self): 
+		super(Faculty, self).__init__() 
 
 	def manageRequests():
 		pass

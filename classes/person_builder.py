@@ -16,11 +16,14 @@ class Builder(ABC):
 	def getLastname(self, lastname):
 		self.person.lastname = lastname
 
-	def getUsername(self):
-		self.person.generateUsername()
+	def getUsername(self, username):
+		if username is None:
+			self.person.username = self.person.generateUsername()
+		else:
+			self.person.username = username			
 
-	def getPassword(self):
-		self.person._password = "temp"
+	def getPassword(self, password):
+		self.person._password = password
 
 	def getPerson(self):
 		return self.person

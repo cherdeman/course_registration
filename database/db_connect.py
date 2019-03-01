@@ -14,3 +14,7 @@ def connect():
         return create_engine(dburl)
 
 conn = connect()
+
+def update(conn, table, col, val, where_field, where_val):
+	update = "UPDATE {} SET {} = {} WHERE {} = {}".format(table, col, val, where_field, where_val)
+	conn.execute(update)

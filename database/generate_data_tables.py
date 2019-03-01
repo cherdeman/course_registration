@@ -24,9 +24,9 @@ student_fields = """studentid   int            NOT NULL,
 				   password    varchar(20),
 			       PRIMARY KEY(studentid)
 			     """
-student_cols = '(studentid, firstname, lastname)'
-student_data = """(100001, "CS", "Student"), 
-				  (100002, "Policy", "Student")"""
+student_cols = '(studentid, firstname, lastname, password)'
+student_data = """(100001, "CS", "Student", "temp"), 
+				  (100002, "Policy", "Student", "temp")"""
 
 generate_table(student_name, student_fields, student_cols, student_data)
 
@@ -40,9 +40,9 @@ instructor_fields = """instructorid   int            NOT NULL,
 				   			password    varchar(20),
 							PRIMARY KEY(instructorid)
 					"""
-instructor_cols = '(instructorid, firstname, lastname, dept_code)'
-instructor_data = """(200001, "A", "Professor", 1),
-					 (200002, "Gary", "Becker", 2)
+instructor_cols = '(instructorid, firstname, lastname, dept_code, password)'
+instructor_data = """(200001, "A", "Professor", 1, "temp"),
+					 (200002, "Gary", "Becker", 2, "temp")
 				  """
 generate_table(instructor_name, instructor_fields, instructor_cols, instructor_data)
 
