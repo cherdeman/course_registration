@@ -8,14 +8,15 @@ person_query = """
 				FROM {}
 				"""
 
-courses_query = """
+grades_query = """
 				SELECT * 
 				FROM grades
 				WHERE studentid = {}
 				"""
 
-def make_students(conn, student_query, courses_query):
-	rs = conn.execute(student_query)
+def make_students():
+	conn = connect()
+	rs = conn.execute(person_query.format('student'))
 	students = rs.fetchall()
 
 	student_obj = {}
@@ -28,7 +29,7 @@ def make_students(conn, student_query, courses_query):
 
 		pastGrades = {}
 		currentCourses = []
-		crs = conn.execute(courses_query.format(studentid))
+		crs = conn.execute(grades_query.format(studentid))
 		courses = crs.fetchall()
 		for course in courses:
 			courseid = course[1]
@@ -86,11 +87,11 @@ def make_instructors(conn, instructor_query):
 
 def main():
 	conn = connect()
-	students = make_students(conn, person_query.format('student'), courses_query)
-	#print("made students {}".format(students.keys()))
+	students = make_students()
+	print("made students {}".format(students.keys()))
 	#print(students[100001].username)
 	instructors = make_instructors(conn, person_query.format('instructor'))
-	#print("made instructors {}".format(instructors.keys()))
+	print("made instructors {}".format(instructors.keys()))
 
 if __name__ == "__main__":
 	main()

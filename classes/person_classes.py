@@ -52,7 +52,7 @@ class Student(Person):
 
 	def changePassword(self):
 		super().changePassword()
-		update(connect(), 'student', 'password', self._password, 'studentid', self._studentid)
+		update(connect(), 'student', 'password', "'" + self._password + "'", 'studentid', self._studentid)
 
 	def addCourse(self, course_obj):
 		self.addMediator(course_obj)
@@ -109,11 +109,11 @@ class Instructor(Person):
 
 	def generateUsername(self):
 		self.username = super().generateUsername()
-		update(connect(), 'instructor', 'username', '"'+self.username+'"', 'instructorid', self._instructorid)
+		update(connect(), 'instructor', 'username',  "'" + self.username + "'", 'instructorid', self._instructorid)
 
 	def changePassword(self):
 		super().changePassword()
-		update(connect(), 'instructor', 'password', self._password, 'instructorid', self._instructorid)
+		update(connect(), 'instructor', 'password', "'" + self._password + "'", 'instructorid', self._instructorid)
 
 	def viewRoster():
 		pass
