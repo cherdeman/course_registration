@@ -8,12 +8,7 @@ class Course:
 		#self.faculty = Faculty()
 		self.enrollment_limit = enrollment_limit
 		self._reg_mediator = None
-		self.description = None
-		self.instructor = None
-		self.enrollees = None
-		self.location = None
-		self.time = None
-		self.prereqs = None
+		self.section = Section()
 
 	def addCourse(self, _id):
 		if self.enrollees is None:
@@ -35,7 +30,13 @@ class Course:
 
 class Section:
 	def __init__(self):
-		pass
+		self._sectionid = None
+		self.term = None
+		self.instructorid = None
+		self.enrollment_min = None
+		self.enrollment_max = None
+		self.time = None
+		self.location = None
 
 class Lab:
 	def __init__(self):
