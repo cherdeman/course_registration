@@ -18,7 +18,7 @@ Clone the repository to the desired location using `git clone https://github.com
 To install the necessary package dependencies for this project, run the command `pip3 -r install requirements.txt` from the root of this repository. Note that the primary dependencies are SQLAlchemy and mysqlclient to facilitate the interaction between Python and the MySQL backend, and pytest to run the testing infrastructure.
 
 ### Database configuration
-Once MySql is installed on your computer, you can access is from the command line with the command `mysql`. The system requires a database called "reggie" and a user called "user". To create the database and user on your system, run the following series of commands from the command line:
+Once MySql is installed on your computer, you can access is from the command line with the command `mysql -u root -p`. The system requires a database called "regie" and a user called "user". To create the database and user on your system, run the following series of commands from the command line:
 
 ```
 mysql -u root -p        # Enter the MySQL command line interface as the root user
