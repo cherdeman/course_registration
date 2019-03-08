@@ -88,12 +88,12 @@ section_fields = """sectionid int NOT NULL,
 					PRIMARY KEY (sectionid, courseid, term)
 				 """
 section_cols = '(sectionid, courseid, term, instructorid, enrollment_min, enrollment_max)'
-section_data = """(10, 1100, "fall18", 200001, 5, 10),
-				  (10, 1200, "fall18", 200001, 5, 10),
-				  (10, 2100, "fall18", 200002, 5, 10),
-				  (10, 1100, "spr19", 200001, 5, 10),
-				  (10, 1200, "spr19", 200001, 5, 10),
-				  (10, 2100, "spr19", 200002, 5, 10)
+section_data = """(10, 1100, "fall2018", 200001, 5, 10),
+				  (10, 1200, "fall2018", 200001, 5, 10),
+				  (10, 2100, "fall2018", 200002, 5, 10),
+				  (10, 1100, "spr2019", 200001, 5, 10),
+				  (10, 1200, "spr2019", 200001, 5, 10),
+				  (10, 2100, "spr2019", 200002, 5, 10)
 			   """
 
 generate_table(section_name, section_fields, section_cols, section_data)

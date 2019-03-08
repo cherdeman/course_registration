@@ -1,9 +1,12 @@
 from database.db_connect import connect
 from classes.person_builder import StudentBuilder, InstructorBuilder
 from classes.person_classes import Student, Instructor
+from classes.course_classes import Course, Section
+from classes.course_builder import CourseBuilder, SectionBuilder
+from datetime import datetime
 
 #
-person_query = """
+select_query = """
 				SELECT * 
 				FROM {}
 				"""
@@ -14,9 +17,10 @@ grades_query = """
 				WHERE studentid = {}
 				"""
 
-def make_students():
-	conn = connect()
-	rs = conn.execute(person_query.format('student'))
+
+
+def make_students(conn, student_query):
+	rs = conn.execute(student_query)
 	students = rs.fetchall()
 
 	student_obj = {}
@@ -84,13 +88,76 @@ def make_instructors(conn, instructor_query):
 
 	return instructor_obj
 
+def make_courses(conn, course_query):
+	rs = conn.execute(course_query)
+	courses = rs.fetchall()
+
+	course_obj = {}
+	for course in courses:
+		courseid = course[0]
+		dept = course[1]
+		title = course[2]
+
+		cb = CourseBuilder()
+		cb.course = Course()
+		cb.getId(courseid)
+		cb.getTitle(title)
+		cb.getDepartment(dept)
+
+		term = term()
+		section_query = """
+						SELECT * 
+						FROM section
+						WHERE courseid = {} and term = {}
+						""".format(courseid, term)
+
+		sections = 
+
+def make_sections(conn, section_query):
+	rs = conn.execute(section_query)
+	sections = rs.fetchall()
+
+	section_obj = {}
+	for section in sections
+		sectionid = section[0]
+		courseid = section[1]
+		term = section[2]
+		instructorid = section[3]
+		enrollment_min = section[4]
+		enrollment_max = section[5]
+		time = section[6]
+		location = section[7]
+
+		sb = SectionBuilder()
+		sb.section = Section()
+		sb.getId(sectionid)
+		sb.getTerm(term)
+		sb.getInstructor(instructorid)
+		sb.getEnrollmentMin(enrollment_min)
+		sb.getEnrollmentMax(enrollment_max)
+		sb.getTime(time)
+		sb.getLocation(location)
+		s = sb.getItem()
+		section_obj[s._sectionid] = s
+
+	return section_obj
+
+def term():
+	year = datetime.now().year
+	month = datetime.now().month
+	if month < 7:
+		term = "spr"
+	else:
+		term = "fall"
+
+	return term + str(year)
+
 
 def main():
 	conn = connect()
-	students = make_students()
+	students = make_students(conn, select_query.format('student'))
 	print("made students {}".format(students.keys()))
-	#print(students[100001].username)
-	instructors = make_instructors(conn, person_query.format('instructor'))
+	instructors = make_instructors(conn, select_query.format('instructor'))
 	print("made instructors {}".format(instructors.keys()))
 
 if __name__ == "__main__":

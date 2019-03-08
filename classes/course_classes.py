@@ -1,19 +1,17 @@
 # Course class definitions
 
 class Course:
-	def __init__(self, _id, title, department, enrollment_limit):
-		self._id = _id# the course number
-		self.title = title
-		self.department = department
-		#self.faculty = Faculty()
-		self.enrollment_limit = enrollment_limit
+	def __init__(self):
+		self._coursenum = None
+		self.title = None
+		self.department = None
 		self._reg_mediator = None
-		self.section = Section()
+		self.sections = None
 
-	def addCourse(self, _id):
+	def addCourse(self, studentid):
 		if self.enrollees is None:
 			self.enrollees = []
-		self.enrollees.append(_id)
+		self.enrollees.append(studentid)
 
 
 	def dropCourse(self, studentid):
@@ -32,9 +30,10 @@ class Section:
 	def __init__(self):
 		self._sectionid = None
 		self.term = None
-		self.instructorid = None
+		self.instructor = None
 		self.enrollment_min = None
 		self.enrollment_max = None
+		self.enrollment = None
 		self.time = None
 		self.location = None
 

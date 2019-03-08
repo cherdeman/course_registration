@@ -7,8 +7,8 @@ def connect():
         dburl = URL(
             "mysql",
             host="localhost",
-            username="cherdeman",
-            database="reggie",
+            username="user",
+            database="regie",
             port=3306,
         )
         return create_engine(dburl)
