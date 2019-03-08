@@ -6,7 +6,7 @@ class Builder(ABC):
 	def __init__(self):
 		pass
     
-    @abstractmethod
+	@abstractmethod
 	def getId():
 		pass
 
@@ -27,8 +27,12 @@ class CourseBuilder(Builder):
 	def getDepartment(self, dept):
 		self.course.department = dept
 
-	def getSection(self, sections):
+	def getSections(self, sections):
 		self.course.sections = sections
+
+	def getEnrollmentUpdates(self):
+		self.course.updateEnrollment()
+		self.course.enrollmentLimit()
 
 	def getItem(self):
 		return self.course
@@ -59,7 +63,7 @@ class SectionBuilder(Builder):
 	def getTime(self, time):
 		self.section.time = time
 
-	def getLocation(self. location):
+	def getLocation(self, location):
 		self.section.location = location
 
 	def getItem(self):

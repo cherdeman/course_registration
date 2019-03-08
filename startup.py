@@ -5,7 +5,7 @@ from classes.course_classes import Course, Section
 from classes.course_builder import CourseBuilder, SectionBuilder
 from datetime import datetime
 
-#
+# Define queries
 select_query = """
 				SELECT * 
 				FROM {}
@@ -17,9 +17,21 @@ grades_query = """
 				WHERE studentid = {}
 				"""
 
+section_query = """
+				SELECT * 
+				FROM section
+				WHERE courseid = {} and term = {}
+				"""
+
+enrollment_query = """
+					SELECT DISTINCT studentid
+					FROM grades
+					WHERE courseid = {} and term = {} and sectionid = {}
+					"""
 
 
-def make_students(conn, student_query):
+
+def make_students(conn, student_query, grades_query):
 	rs = conn.execute(student_query)
 	students = rs.fetchall()
 
@@ -88,7 +100,7 @@ def make_instructors(conn, instructor_query):
 
 	return instructor_obj
 
-def make_courses(conn, course_query):
+def make_courses(conn, course_query, section_query, enrollment_query):
 	rs = conn.execute(course_query)
 	courses = rs.fetchall()
 
@@ -98,30 +110,29 @@ def make_courses(conn, course_query):
 		dept = course[1]
 		title = course[2]
 
+		sections = make_sections(conn, section_query, enrollment_query, courseid, "'"+current_term()+"'")
+
 		cb = CourseBuilder()
 		cb.course = Course()
 		cb.getId(courseid)
 		cb.getTitle(title)
 		cb.getDepartment(dept)
+		cb.getSections(sections)
+		cb.getEnrollmentUpdates()
+		c = cb.getItem()
+		course_obj[c._coursenum] = c
 
-		term = term()
-		section_query = """
-						SELECT * 
-						FROM section
-						WHERE courseid = {} and term = {}
-						""".format(courseid, term)
+	return course_obj
 
-		sections = 
-
-def make_sections(conn, section_query):
-	rs = conn.execute(section_query)
+def make_sections(conn, section_query, enrollment_query, courseid, current_term):
+	rs = conn.execute(section_query.format(courseid, current_term))
 	sections = rs.fetchall()
 
 	section_obj = {}
-	for section in sections
+	for section in sections:
 		sectionid = section[0]
 		courseid = section[1]
-		term = section[2]
+		course_term = section[2]
 		instructorid = section[3]
 		enrollment_min = section[4]
 		enrollment_max = section[5]
@@ -131,10 +142,11 @@ def make_sections(conn, section_query):
 		sb = SectionBuilder()
 		sb.section = Section()
 		sb.getId(sectionid)
-		sb.getTerm(term)
+		sb.getTerm(course_term)
 		sb.getInstructor(instructorid)
 		sb.getEnrollmentMin(enrollment_min)
 		sb.getEnrollmentMax(enrollment_max)
+		sb.getEnrollment(enrollment(conn, enrollment_query, courseid, "'" + course_term + "'", sectionid))
 		sb.getTime(time)
 		sb.getLocation(location)
 		s = sb.getItem()
@@ -142,7 +154,15 @@ def make_sections(conn, section_query):
 
 	return section_obj
 
-def term():
+def enrollment(conn, enrollment_query, courseid, term, sectionid):
+	enrolled = []
+	rs = conn.execute(enrollment_query.format(courseid, term, sectionid))
+	enrollment = rs.fetchall()
+
+	for studentid in enrollment:
+		enrolled.append(studentid)
+
+def current_term():
 	year = datetime.now().year
 	month = datetime.now().month
 	if month < 7:
@@ -152,13 +172,14 @@ def term():
 
 	return term + str(year)
 
-
 def main():
 	conn = connect()
-	students = make_students(conn, select_query.format('student'))
+	students = make_students(conn, select_query.format('student'), grades_query)
 	print("made students {}".format(students.keys()))
 	instructors = make_instructors(conn, select_query.format('instructor'))
 	print("made instructors {}".format(instructors.keys()))
+	courses = make_courses(conn, select_query.format('course'), section_query, enrollment_query)
+	print("made courses {}".format(courses.keys()))
 
 if __name__ == "__main__":
 	main()

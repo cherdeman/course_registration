@@ -65,6 +65,7 @@ course_fields = """courseid    int 		 NOT NULL,
 				   dept_code   int 		 NOT NULL,
 				   title       varchar(50) NOT NULL,
 				   description text,
+				   enrollment  int,
 				   PRIMARY KEY (courseid)
 				"""
 course_cols = '(courseid, dept_code, title, description)'
@@ -85,6 +86,7 @@ section_fields = """sectionid int NOT NULL,
 					enrollment_max int NOT NULL,
 					time timestamp,
 					location varchar(5),
+					enrollment int,
 					PRIMARY KEY (sectionid, courseid, term)
 				 """
 section_cols = '(sectionid, courseid, term, instructorid, enrollment_min, enrollment_max)'

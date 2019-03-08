@@ -1,11 +1,15 @@
 # Course class definitions
 
+from database.db_connect import connect, update
+
 class Course:
 	def __init__(self):
 		self._coursenum = None
 		self.title = None
 		self.department = None
 		self._reg_mediator = None
+		self.enrollment = None
+		self.enrollment_limit = None
 		self.sections = None
 
 	def addCourse(self, studentid):
@@ -23,8 +27,20 @@ class Course:
 		if self._reg_mediator is None:
 			self._reg_mediator = reg_mediator
 
-	def addInstructor():
-		pass
+	def updateEnrollment(self):
+		enrollment = 0
+		for section in self.sections.values():
+			enrollment += len(section.enrollment)
+
+		self.enrollment = enrollment
+
+	def enrollmentLimit(self):
+		limit = 0
+		for section in self.sections.values():
+			limit += section.enrollment_max
+
+		self.enrollment_limit = limit
+
 
 class Section:
 	def __init__(self):

@@ -20,8 +20,8 @@ class RegistrationMediator():
 			self._course = course
 
 	def isCourseAvailable(self):
-		if self._course.enrollees is None or \
-		   len(self._course.enrollees) < self._course.enrollment_limit:
+		if self._course.enrollment is None or \
+		   len(self._course.enrollment) < self._course.enrollment_limit:
 		   return True
 		return False
 

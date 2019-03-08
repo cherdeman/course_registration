@@ -1,9 +1,32 @@
 import pytest
-from classes.course_classes import *
+from classes.course_classes import Course, Section
 from classes.registration_mediator import RegistrationMediator
+from classes.course_builder import CourseBuilder, SectionBuilder
 
 # Initialize objects for testing
-test_course = Course(1, "Object Oriented Programming", "CS", 30)
+section_obj = {}
+sb = SectionBuilder()
+sb.section = Section()
+sb.getId(10)
+sb.getTerm("fall2018")
+sb.getInstructor(1)
+sb.getEnrollmentMin(5)
+sb.getEnrollmentMax(30)
+sb.getEnrollment([100001])
+sb.getTime("12:00 - 1:20")
+sb.getLocation("RYE")
+s = sb.getItem()
+section_obj[s._sectionid] = s
+
+cb = CourseBuilder()
+cb.course = Course()
+cb.getId(1)
+cb.getTitle("Object Oriented Programming")
+cb.getDepartment("CS")
+cb.getSections(section_obj)
+cb.getEnrollmentUpdates()
+test_course = cb.getItem()
+
 existing_classes = [test_course] #, Section(), Lab(), Building(), Room(), TimeSlot(), Search()]
 #course_subclasses = [Section, Lab]
 #building_subclasses = [Room]
@@ -22,8 +45,8 @@ def test_constructor(test_class):
 # 	assert issubclass(building_class, Building)
 
 # Test for course class
-def test_course_id():
-	assert test_course._id == 1
+def test_course_coursenum():
+	assert test_course._coursenum == 1
 
 def test_course_title():
 	assert test_course.title == "Object Oriented Programming"

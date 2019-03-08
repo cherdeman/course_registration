@@ -5,6 +5,7 @@ from classes.person_builder import StudentBuilder
 from classes.person_classes import *
 from classes.course_classes import Course
 from classes.registration_mediator import RegistrationMediator
+from classes.course_builder import CourseBuilder, SectionBuilder
 
 #Test objects
 sb = StudentBuilder()
@@ -18,7 +19,14 @@ sb.getPastGrades({'fall18': (1, 10, "B")})
 sb.getCurrentCourses([])
 test_student = sb.getPerson()
 
-test_course = Course(1, "Object Oriented Programming", "CS", 30)
+cb = CourseBuilder()
+cb.course = Course()
+cb.getId(1)
+cb.getTitle("Object Oriented Programming")
+cb.getDepartment("CS")
+cb.getSections({})
+test_course = cb.getItem()
+
 test_mediator = RegistrationMediator()
 
 # Tests specific to registration mediator class
