@@ -27,8 +27,8 @@ class CourseBuilder(Builder):
 	def getDepartment(self, dept):
 		self.course.department = dept
 
-	def getSections(self, sections):
-		self.course.sections = sections
+	def getSections(self, section):
+		self.course.section = section
 
 	def getEnrollmentUpdates(self):
 		self.course.updateEnrollment()

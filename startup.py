@@ -110,14 +110,12 @@ def make_courses(conn, course_query, section_query, enrollment_query):
 		dept = course[1]
 		title = course[2]
 
-		sections = make_sections(conn, section_query, enrollment_query, courseid, "'"+current_term()+"'")
-
 		cb = CourseBuilder()
 		cb.course = Course()
 		cb.getId(courseid)
 		cb.getTitle(title)
 		cb.getDepartment(dept)
-		cb.getSections(sections)
+		cb.getSections(make_sections(conn, section_query, enrollment_query, courseid, "'"+current_term()+"'"))
 		cb.getEnrollmentUpdates()
 		c = cb.getItem()
 		course_obj[c._coursenum] = c
@@ -150,9 +148,8 @@ def make_sections(conn, section_query, enrollment_query, courseid, current_term)
 		sb.getTime(time)
 		sb.getLocation(location)
 		s = sb.getItem()
-		section_obj[s._sectionid] = s
 
-	return section_obj
+	return s
 
 def enrollment(conn, enrollment_query, courseid, term, sectionid):
 	enrolled = []
@@ -161,6 +158,8 @@ def enrollment(conn, enrollment_query, courseid, term, sectionid):
 
 	for studentid in enrollment:
 		enrolled.append(studentid)
+
+	return enrolled
 
 def current_term():
 	year = datetime.now().year

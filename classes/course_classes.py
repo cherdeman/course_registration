@@ -1,6 +1,6 @@
 # Course class definitions
 
-from database.db_connect import connect, update
+from database.db_connect import connect, update, add, delete
 
 class Course:
 	def __init__(self):
@@ -10,36 +10,25 @@ class Course:
 		self._reg_mediator = None
 		self.enrollment = None
 		self.enrollment_limit = None
-		self.sections = None
+		self.section = None
 
-	def addCourse(self, studentid):
-		if self.enrollees is None:
-			self.enrollees = []
-		self.enrollees.append(studentid)
+	def addCourse(self, studentid, db = True):
+		self.section.addSection(studentid, self._coursenum, db)
+		self.updateEnrollment()
 
-
-	def dropCourse(self, studentid):
-		self.enrollees.remove(studentid)
-		if len(self.enrollees) == 0:
-			self.enrollees = None
+	def dropCourse(self, studentid, db = True):
+		self.section.dropSection(studentid, db)
+		self.updateEnrollment()
 
 	def addMediator(self, reg_mediator):
 		if self._reg_mediator is None:
 			self._reg_mediator = reg_mediator
 
 	def updateEnrollment(self):
-		enrollment = 0
-		for section in self.sections.values():
-			enrollment += len(section.enrollment)
-
-		self.enrollment = enrollment
+		self.enrollment = len(self.section.enrollment)
 
 	def enrollmentLimit(self):
-		limit = 0
-		for section in self.sections.values():
-			limit += section.enrollment_max
-
-		self.enrollment_limit = limit
+		self.enrollment_limit = self.section.enrollment_max
 
 
 class Section:
@@ -52,6 +41,21 @@ class Section:
 		self.enrollment = None
 		self.time = None
 		self.location = None
+
+	def addSection(self, studentid, courseid, db):
+		if self.enrollment is None:
+			self.enrollment = []
+		self.enrollment.append(studentid)
+		if db:
+			value = "'('"+ str(studentid) + "','" + str(courseid) + "','" + str(self._sectionid) + "','" + self.term + "')'"
+			add(connect(), 'grades', '(studentid, courseid, sectionid, term)',  value)
+
+	def dropSection(self, studentid, db):
+		self.enrollment.remove(studentid)
+		if db:
+			delete(connect(), grades, 'studentid', studentid)
+
+		
 
 class Lab:
 	def __init__(self):

@@ -4,7 +4,6 @@ from classes.registration_mediator import RegistrationMediator
 from classes.course_builder import CourseBuilder, SectionBuilder
 
 # Initialize objects for testing
-section_obj = {}
 sb = SectionBuilder()
 sb.section = Section()
 sb.getId(10)
@@ -16,14 +15,14 @@ sb.getEnrollment([100001])
 sb.getTime("12:00 - 1:20")
 sb.getLocation("RYE")
 s = sb.getItem()
-section_obj[s._sectionid] = s
+
 
 cb = CourseBuilder()
 cb.course = Course()
 cb.getId(1)
 cb.getTitle("Object Oriented Programming")
 cb.getDepartment("CS")
-cb.getSections(section_obj)
+cb.getSections(s)
 cb.getEnrollmentUpdates()
 test_course = cb.getItem()
 
@@ -58,12 +57,13 @@ def test_course_enrollment_limit():
 	assert test_course.enrollment_limit == 30
 
 def test_course_addCourse():
-	test_course.addCourse(1)
-	assert test_course.enrollees == [1]
+	test_course.addCourse(100002, db = False)
+	assert test_course.section.enrollment == [100001, 100002]
 
 def test_course_dropCourse():
-	test_course.dropCourse(1)
-	assert test_course.enrollees is None
+	test_course.dropCourse(100002, db = False)
+	assert test_course.section.enrollment == [100001]
+	assert test_course.enrollment == 1
 
 def test_course_addMediator():
 	test_mediator = RegistrationMediator()

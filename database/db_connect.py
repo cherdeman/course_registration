@@ -18,3 +18,12 @@ conn = connect()
 def update(conn, table, col, val, where_field, where_val):
 	update = "UPDATE {} SET {} = {} WHERE {} = {}".format(table, col, val, where_field, where_val)
 	conn.execute(update)
+
+
+def add(conn, table, cols, values):
+    add = "INSERT INTO {} {} VALUES {};"
+    conn.execute(add)
+
+def delete(conn, table, where_col, where_val):
+    delete = "DELETE FROM {} WHERE {} = {}"
+    conn.execute(delete)

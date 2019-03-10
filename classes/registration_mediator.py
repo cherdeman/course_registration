@@ -28,6 +28,7 @@ class RegistrationMediator():
 	def addCourse(self):
 		confirm = input("Are you sure you want to add {}? (y/n)".format(self._course.title))
 		if confirm == "y":
+			# Only one section in this system, would need to be built out
 			self._course.addCourse(self._student.idnum)
 			self._student._add(self._course._id)
 			print("You are enrolled in {}.".format(self._course.title))
