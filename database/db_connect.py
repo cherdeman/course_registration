@@ -16,14 +16,15 @@ def connect():
 conn = connect()
 
 def update(conn, table, col, val, where_field, where_val):
-	update = "UPDATE {} SET {} = {} WHERE {} = {}".format(table, col, val, where_field, where_val)
-	conn.execute(update)
+    update = "UPDATE {} SET {} = {} WHERE {} = {}".format(table, col, val, where_field, where_val)
+    conn.execute(update)
 
 
 def add(conn, table, cols, values):
-    add = "INSERT INTO {} {} VALUES {};"
+    add = "INSERT INTO {} {} VALUES {};".format(table, cols, values)
+    print(add   )
     conn.execute(add)
 
 def delete(conn, table, where_col, where_val):
-    delete = "DELETE FROM {} WHERE {} = {}"
+    delete = "DELETE FROM {} WHERE {} = {}".format(table, where_col, where_val)
     conn.execute(delete)

@@ -2,6 +2,7 @@
 
 from abc import ABC, abstractmethod
 from database.db_connect import connect, update
+import classes.registration_mediator as rm
 
 class Person(ABC):
 	"""
@@ -90,7 +91,7 @@ class Student(Person):
 
 	def addMediator(self, course_obj):
 		# instantiate mediator
-		reg_mediator = RegistrationMediator()
+		reg_mediator = rm.RegistrationMediator()
 		
 		# add mediator to current student
 		if self._reg_mediator is None:

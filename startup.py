@@ -31,8 +31,10 @@ enrollment_query = """
 
 
 
-def make_students(conn, student_query, grades_query):
-	rs = conn.execute(student_query)
+def make_students():
+	# call function with no arguments
+	conn = connect()
+	rs = conn.execute(select_query.format('student'))
 	students = rs.fetchall()
 
 	student_obj = {}
@@ -100,8 +102,9 @@ def make_instructors(conn, instructor_query):
 
 	return instructor_obj
 
-def make_courses(conn, course_query, section_query, enrollment_query):
-	rs = conn.execute(course_query)
+def make_courses():
+	conn = connect()
+	rs = conn.execute(select_query.format('course'))
 	courses = rs.fetchall()
 
 	course_obj = {}
@@ -173,11 +176,11 @@ def current_term():
 
 def main():
 	conn = connect()
-	students = make_students(conn, select_query.format('student'), grades_query)
+	students = make_students()
 	print("made students {}".format(students.keys()))
 	instructors = make_instructors(conn, select_query.format('instructor'))
 	print("made instructors {}".format(instructors.keys()))
-	courses = make_courses(conn, select_query.format('course'), section_query, enrollment_query)
+	courses = make_courses()
 	print("made courses {}".format(courses.keys()))
 
 if __name__ == "__main__":

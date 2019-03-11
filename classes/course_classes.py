@@ -47,13 +47,14 @@ class Section:
 			self.enrollment = []
 		self.enrollment.append(studentid)
 		if db:
-			value = "'('"+ str(studentid) + "','" + str(courseid) + "','" + str(self._sectionid) + "','" + self.term + "')'"
+			value = "("+ str(studentid) + "," + str(courseid) + "," + str(self._sectionid) + ",'" + self.term + "')"
+			print(value)
 			add(connect(), 'grades', '(studentid, courseid, sectionid, term)',  value)
 
 	def dropSection(self, studentid, db):
 		self.enrollment.remove(studentid)
 		if db:
-			delete(connect(), grades, 'studentid', studentid)
+			delete(connect(), 'grades', 'studentid', studentid)
 
 		
 
