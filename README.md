@@ -37,7 +37,7 @@ TODO (currently `python3 startup.py` from root.) May be updated to run as single
 The suite of tests can be run using the command `pytest` from the root of this repository. 
 
 ## Interacting with the system
-This system was not developed with a front end, so all interaction with the system takes place from the command line. To interact with the system, run the command `python3 login.py` from the root of the repository. You can login as any username/password combination found in the "student" or "instructor" tables in the database. I suggest starting with the username "cstudent" and password "temp". Follow the prompts from there.
+This system was not developed with a front end, so all interaction with the system takes place from the command line. To interact with the system, run the command `python3 login.py` from the root of the repository. Note that this command must be run AFTER `python3 database/generate_data_tables.py` and `python3 startup.py`. You can login as any username/password combination found in the "student" or "instructor" tables in the database. I suggest starting with the username "cstudent" and password "temp". Follow the prompts from there.
 
 ## Acknowledgements
 Thank you to Professor Mark Shacklette and TA's Terry Lynch and John Hadidian-Baugher for their support and assistance in developing this project!
