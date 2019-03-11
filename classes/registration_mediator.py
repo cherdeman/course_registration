@@ -1,4 +1,4 @@
-# Registration Mediator
+	# Registration Mediator
 #import person_classes as p
 #import course_classes as c
 
@@ -42,17 +42,20 @@ class RegistrationMediator():
 
 	def dropCourse(self):
 		# check that the student is enrolled in the course
-		if self._course._coursenum not in self._student.currentCourses:
-			print("You are not enrolled in {} so cannot drop it.".format(self._course.title))
-			self._course._reg_mediator = None
-			self._student._reg_mediator = None
-			return
+		self.checkEnrollment()
 
 		confirm = input("Are you sure you want to drop {}? (y/n)".format(self._course.title))
 		if confirm == "y":
 			self._student._drop(self._course._coursenum)
 			self._course.dropCourse(self._student._studentid)
 			print("You have dropped {}.".format(self._course.title))
+			self._course._reg_mediator = None
+			self._student._reg_mediator = None
+			return
+
+	def checkEnrollment(self):
+		if self._course._coursenum not in self._student.currentCourses:
+			print("You are not enrolled in {} so cannot drop it.".format(self._course.title))
 			self._course._reg_mediator = None
 			self._student._reg_mediator = None
 			return

@@ -3,20 +3,8 @@
 import pytest
 from classes.person_classes import *
 from classes.person_builder import StudentBuilder, InstructorBuilder
-#from classes.registration_mediator import RegistrationMediator
+import classes.registration_mediator as rm
 from classes.course_classes import Course
-
-# Initialize objects for testing
-sb = StudentBuilder()
-sb.person = Student()
-sb.getFirstname("Claire")
-sb.getLastname("Herdeman")
-sb.getUsername("cherdeman")
-sb.getPassword("temp")
-sb.getId(100000)
-sb.getPastGrades({'fall18': (1, 10, "B")})
-sb.getCurrentCourses([])
-test_student = sb.getPerson()
 
 ib = InstructorBuilder()
 ib.person = Instructor()
@@ -30,17 +18,44 @@ test_instructor = ib.getPerson()
 
 test_faculty = Faculty()
 
-existing_classes = [test_student, test_instructor]
-person_subclasses = [Student, Instructor]
+# Tests for student builder and creation of test object
+sb = StudentBuilder()
+sb.person = Student()
 
-# Parametrized tests for all person  classes
-@pytest.mark.parametrize('test_class', existing_classes)
-def test_constructor(test_class):
-	assert len(test_class.__dict__) > 0
+sb.getFirstname("Claire")
+def test_sb_firstname():
+	sb.person.firstname == "Claire"
 
-@pytest.mark.parametrize('person_class', person_subclasses)
-def test_person_subclass(person_class):
-	assert issubclass(person_class, Person)
+sb.getLastname("Herdeman")
+def test_sb_lastname():
+	sb.person.lastname == "Herdeman"
+
+# Test generateUsername person method and getUsername builder method
+def test_generateUsername():
+	sb.person.generateUsername(db = False)
+	sb.person.username == "cherdeman"
+
+sb.getUsername("cherdeman")
+def test_sb_username():
+	sb.person.username == "cherdeman"
+
+sb.getPassword("temp")
+def test_sb_username():
+	sb.person._password == "temp"
+
+sb.getId(100000)
+def test_sb_id():
+	sb.person._studentid == 100000
+
+sb.getPastGrades({'fall18': (1, 10, "B")})
+def test_sb_pastgrades():
+	sb.person.pastGrades == {'fall18': (1, 10, "B")}
+
+sb.getCurrentCourses([])
+def test_sb_currentcourses():
+	sb.person.currentCourses == []
+
+test_student = sb.getPerson()
 
 # Tests specific to student class
 def test_student_firstname():
@@ -89,3 +104,15 @@ def test_instructor_id():
 
 def test_instructor_code():
 	assert test_instructor.dept_code == 1
+
+existing_classes = [test_student, test_instructor]
+person_subclasses = [Student, Instructor]
+
+# Parametrized tests for all person  classes
+@pytest.mark.parametrize('test_class', existing_classes)
+def test_constructor(test_class):
+	assert len(test_class.__dict__) > 0
+
+@pytest.mark.parametrize('person_class', person_subclasses)
+def test_person_subclass(person_class):
+	assert issubclass(person_class, Person)

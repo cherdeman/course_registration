@@ -47,13 +47,15 @@ class Student(Person):
 		self.pastGrades = None 
 		self._reg_mediator = None
 
-	def generateUsername(self):
+	def generateUsername(self, db = True):
 		self.username = super().generateUsername()
-		update(connect(), 'student', 'username', "'" + self.username + "'", 'studentid', self._studentid)
+		if db:
+			update(connect(), 'student', 'username', "'" + self.username + "'", 'studentid', self._studentid)
 
-	def changePassword(self):
+	def changePassword(self, db = True):
 		super().changePassword()
-		update(connect(), 'student', 'password', "'" + self._password + "'", 'studentid', self._studentid)
+		if db:
+			update(connect(), 'student', 'password', "'" + self._password + "'", 'studentid', self._studentid)
 
 	def addCourse(self, course_obj):
 		self.addMediator(course_obj)

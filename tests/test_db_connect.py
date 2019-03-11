@@ -1,10 +1,18 @@
 # This document containts unit tests for the database connection
 
-# import pytest
-# from  db_connect import connect
-# import MySQLdb
+import pytest
+import  database.db_connect as db
+import sqlalchemy as sa
+#import MySQLdb
 
-# def test_connect():
-# 	assert connect() == create_engine("mysql://cherdeman@localhost:3306/reggie")
+def test_url():
+	dburl = db.URL(
+            "mysql",
+            host="localhost",
+            username="user",
+            database="regie",
+            port=3306,
+        )
+	dburl == "mysql://user@localhost:3306/regie"
 
 

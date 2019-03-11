@@ -44,7 +44,10 @@ def test_mediator_getCourse():
 	test_mediator.getCourse(test_course)
 	assert test_mediator._course == test_course
 
-def test_course_getCourse():
+def test_student_mediator():
+	test_student._reg_mediator == test_mediator
+
+def test_course_mediator():
 	test_course._reg_mediator == test_mediator
 
 def test_course_isCourseAvailable():
