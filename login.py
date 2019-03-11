@@ -91,7 +91,11 @@ class Login:
 			print("1) Change Password")
 			print("2) Add Course")
 			print("3) Drop Course")
-			print("4) Exit")
+			print("4) Drop All Courses")
+			print("5) View Past Grades")
+			print("6) View Current Courses")
+			print("7) Search Courses")
+			print("8) Exit")
 			option = int(input("Please enter the number of the option you'd like to select: "))
 			if option == 1:
 				student.changePassword()
@@ -104,6 +108,15 @@ class Login:
 				course = courses[coursenum]
 				student.dropCourse(course)
 			elif option == 4:
+				print("This option doesn't work yet")
+			elif option == 5:
+				print("This option doesn't work yet")
+			elif option == 6:
+				print("This option doesn't work yet")
+			elif option == 7:
+				print("This option doesn't work yet")
+			else:
+				print("You are exiting the system, bye")
 				active = False
 
 
