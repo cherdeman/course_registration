@@ -1,7 +1,7 @@
 # Person class definitions
 
 from abc import ABC, abstractmethod
-from database.db_connect import connect, update
+from database.db_connect import connect, update, view_courses
 import classes.registration_mediator as rm
 
 class Person(ABC):
@@ -79,14 +79,18 @@ class Student(Person):
 		if len(self.currentCourses) == 0:
 			self.currentCourses = None
 
-	def dropAllCourses(self, course_obj):
-		pass
+	def dropAllCourses(self, courses):
+		for coursenum in self.currentCourses:
+			self.dropCourse(courses[coursenum])
 
 		# for course in self.currentCourses:
 		# 	self._reg_mediator.dropCourse()
 
-	def viewCourses():
-		pass
+	def viewCourses(self):
+		course_input = ', '.join([str(coursenum) for coursenum in self.currentCourses])
+		print(course_input)
+		print("You are currently enrolled in: ")
+		view_courses(connect(), course_input)
 
 	def viewGrades():
 		pass

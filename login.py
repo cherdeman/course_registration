@@ -108,11 +108,11 @@ class Login:
 				course = courses[coursenum]
 				student.dropCourse(course)
 			elif option == 4:
-				print("This option doesn't work yet")
+				student.dropAllCourses(courses)
 			elif option == 5:
 				print("This option doesn't work yet")
 			elif option == 6:
-				print("This option doesn't work yet")
+				student.viewCourses()
 			elif option == 7:
 				print("This option doesn't work yet")
 			else:

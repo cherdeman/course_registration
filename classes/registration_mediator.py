@@ -51,7 +51,7 @@ class RegistrationMediator():
 			print("You have dropped {}.".format(self._course.title))
 			self._course._reg_mediator = None
 			self._student._reg_mediator = None
-			return
+		
 
 	def checkEnrollment(self):
 		if self._course._coursenum not in self._student.currentCourses:
