@@ -1,7 +1,8 @@
 # Class implementing course search functionality
-
 import database.db_connect as db
 from tabulate import tabulate
+from sqlalchemy import text
+from startup_functions import current_term
 
 class Search():
 	# __instance = None
@@ -23,15 +24,13 @@ class Search():
 		while search:
 			where_clause = self._option()
 			query = self._generate_query(where_clause)
-			print(query)
 			self._search(query)
 			cont = input("Would you like to search again? (y/n): ")	
 			if cont == "n":
 				search = False
 
 	def _search(self, query):
-		#conn = self.conn
-		rs = self.conn.execute(query)
+		rs = self.conn.execute(text(query))
 		results = rs.fetchall()
 		
 		headers = ["Course ID Num", "Department", "Title", "Description", "Offered this term?", "Spots Available"]
@@ -71,7 +70,8 @@ class Search():
 			GROUP BY courseid, term
 		) e 
 		USING(courseid, term) 
-		"""
+		WHERE term = '{}'
+		""".format(current_term())
 
 		query = base + where_clause
 
@@ -88,20 +88,17 @@ class Search():
 		print("What field would you like to search by?")
 		for i in range(1, 6):
 			print("{}) {}".format(i, option_dict[i][0]))
-		# print("1) course id number")
-		# print("2) department")
-		# print("3) title")
-		# print("4) description")
-		# print("5) keyword")
-		# print("6) instructor name")
+
 		option = int(input("Please enter the number of the field you'd like to select: "))
 		term = input("Please enter your search term: ")
 
-		#option_dict[option].append(term)
 		if option_dict[option][1] == int:
-			where = "WHERE courseid = {}".format(int(term))
+			where = "AND courseid = {}".format(int(term))
 		else:
-			field = option_dict[option][0]
-			where = "WHERE {0} LIKE %{1}%;".format(field, term)
+			if option == 5:
+				field = "CONCAT(i.firstname, ' ', i.lastname)"
+			else:
+				field = option_dict[option][0]
+			where = "AND {0} LIKE '%{1}%';".format(field, term)
 
 		return where

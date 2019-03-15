@@ -1,5 +1,6 @@
 from database.db_connect import connect
-from startup_functions import make_students#, make_courses
+from startup_functions import make_students#, make_courses\
+from classes.search_class import Search
 
 class Login:
 	def __init__(self):
@@ -19,14 +20,9 @@ class Login:
 	def verifyCredentials(self):
 		conn = connect()
 		# only allow login as student for the time being
-		username_query = """SELECT DISTINCT username, password, studentid FROM student""" #, "student" FROM student 
-					#UNION SELECT username, password, instructorid, "instructor" FROM instructor"""
-
+		username_query = """SELECT DISTINCT username, password, studentid FROM student""" 
 		rs = conn.execute(username_query)
 		usernames = rs.fetchall()
-
-		# self.manageAttempts(enterUsername(usernames), 3, False)
-		# self.manageAttempts(enterPassword(user), 3, False)
 
 		# Allow 3 attempts to correctly enter username
 		user = self.enterUsername(usernames)
@@ -51,19 +47,6 @@ class Login:
 			pass_count += 1
 			
 		return student_id
-
-	# def manageAttempts(self, method, max_attempts, r = True):
-	# 	item = self.method
-	# 	count = 1
-	# 	while item is None:
-	# 		item = self.method
-	# 		count += 1
-	# 		if count == max_attempts:
-	# 			print("You have exceeded the number of tries for this session.")
-	# 			return
-	# 	if r:
-	# 		return item
-
 
 	def enterUsername(self, usernames):
 		username = input("Please enter your username: ")
@@ -101,11 +84,9 @@ class Login:
 				student.changePassword()
 			elif option == 2:
 				coursenum = int(input("Enter the course number: "))
-				#course = courses[coursenum]
 				student.addCourse(coursenum)
 			elif option == 3:
 				coursenum = int(input("Enter the course number: "))
-				#course = courses[coursenum]
 				student.dropCourse(coursenum)
 			elif option == 4:
 				student.dropAllCourses()
@@ -114,7 +95,7 @@ class Login:
 			elif option == 6:
 				student.viewCourses()
 			elif option == 7:
-				print("This option doesn't work yet")
+				Search().control()
 			else:
 				print("You are exiting the system, bye")
 				active = False

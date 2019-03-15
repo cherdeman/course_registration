@@ -108,6 +108,9 @@ class Student(Person):
 				print(tabulate(self.pastGrades[term], header))
 				print()
 
+	# Search
+	#def searchCourses(self):
+
 	#### helper methods ####
 	def _add(self, courseid):
 		if self.currentCourses is None:
