@@ -48,6 +48,7 @@ class Student(Person):
 		self.pastGrades = None 
 		self._reg_mediator = None
 
+	# Implementations of abstract methods
 	def generateUsername(self, db = True):
 		self.username = super().generateUsername()
 		if db:
@@ -58,30 +59,23 @@ class Student(Person):
 		if db:
 			update(connect(), 'student', 'password', "'" + self._password + "'", 'studentid', self._studentid)
 
+	# Main add/drop functions
 	def addCourse(self, courseid):
-		self.addMediator(courseid)
+		self._addMediator(courseid)
 
 		if self._reg_mediator.isCourseAvailable() and \
-		   self.currentCourses is None or len(self.currentCourses) < 3: # leave as 3 for now, should be a var and based on FT/PT
+		   self.currentCourses is None or len(self.currentCourses) < 3: # leave as 3 for now, should be a var
 		   self._reg_mediator.addCourse()
 
 		self._reg_mediator = None
 
 	def dropCourse(self, courseid, drop_all = False):
-		self.addMediator(courseid)
+		self._addMediator(courseid)
 
 		self._reg_mediator.dropCourse()
 
 		if drop_all:
 			self._reg_mediator = None
-
-	def _add(self, courseid):
-		if self.currentCourses is None:
-			self.currentCourses = []
-		self.currentCourses.append(courseid)
-
-	def _drop(self, courseid):
-		self.currentCourses.remove(courseid)
 
 	def dropAllCourses(self):
 		courselist = self.currentCourses[:]
@@ -94,6 +88,7 @@ class Student(Person):
 
 		self._reg_mediator = None
 
+	# Viewing methods
 	def viewCourses(self):
 		if len(self.currentCourses) == 0:
 			print("You are not registered for any courses this term.")
@@ -112,14 +107,22 @@ class Student(Person):
 				print("Term: {}".format(term))
 				print(tabulate(self.pastGrades[term], header))
 				print()
+
+	#### helper methods ####
+	def _add(self, courseid):
+		if self.currentCourses is None:
+			self.currentCourses = []
+		self.currentCourses.append(courseid)
+
+	def _drop(self, courseid):
+		self.currentCourses.remove(courseid)
 			
-	def addMediator(self, courseid):
+	def _addMediator(self, courseid):
 		# instantiate mediator
 		reg_mediator = rm.RegistrationMediator()
 		
 		# add mediator to current student
-		if self._reg_mediator is None:
-			self._reg_mediator = reg_mediator
+		self._reg_mediator = reg_mediator
 
 		# register course/student with mediator
 		self._reg_mediator.getStudent(self)

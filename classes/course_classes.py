@@ -1,6 +1,6 @@
 # Course class definitions
 
-from database.db_connect import connect, update, add, delete
+from database.db_connect import connect, update, add, drop
 
 class Course:
 	def __init__(self):
@@ -19,19 +19,19 @@ class Course:
 		self._reg_mediator = None
 
 	def dropCourse(self, studentid, db = True):
-		self.section.dropSection(studentid, db)
+		self.section.dropSection(studentid, self._coursenum, db)
 		self.updateEnrollment()
 		self._reg_mediator = None
-
-	def addMediator(self, reg_mediator):
-		if self._reg_mediator is None:
-			self._reg_mediator = reg_mediator
 
 	def updateEnrollment(self):
 		self.enrollment = len(self.section.enrollment)
 
 	def enrollmentLimit(self):
 		self.enrollment_limit = self.section.enrollment_max
+
+	def _addMediator(self, reg_mediator):
+		if self._reg_mediator is None:
+			self._reg_mediator = reg_mediator
 
 
 class Section:
@@ -53,13 +53,12 @@ class Section:
 			value = "("+ str(studentid) + "," + str(courseid) + "," + str(self._sectionid) + ",'" + self.term + "')"
 			add(connect(), 'grades', '(studentid, courseid, sectionid, term)',  value)
 
-	def dropSection(self, studentid, db = True):
+	def dropSection(self, studentid, coursenum, db = True):
 		self.enrollment.remove(studentid)
 		if db:
-			delete(connect(), 'grades', 'studentid', studentid)
+			drop(connect(), studentid, coursenum)
 
-		
-
+# Stubbed classes
 class Lab:
 	def __init__(self):
 		pass

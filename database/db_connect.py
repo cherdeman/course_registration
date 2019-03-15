@@ -25,8 +25,8 @@ def add(conn, table, cols, values):
     add = "INSERT INTO {} {} VALUES {};".format(table, cols, values)
     conn.execute(add)
 
-def delete(conn, table, where_col, where_val):
-    delete = "DELETE FROM {} WHERE {} = {}".format(table, where_col, where_val)
+def drop(conn, studentid, courseid):
+    delete = "DELETE FROM grades WHERE studentid = {} AND courseid = {}".format(studentid, courseid)
     conn.execute(delete)
 
 def view_courses(conn, course_input):
