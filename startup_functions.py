@@ -153,7 +153,9 @@ def make_instructors(conn, instructor_query):
 def make_course(courseid):
 	conn = connect()
 	query = select_query + where_clause
-	rs = conn.execute(select_query.format('course', 'courseid', courseid))
+	print("query")
+	print(query)
+	rs = conn.execute(query.format('course', 'courseid', courseid))
 	course = rs.fetchone()
 
 	courseid = course[0]
