@@ -1,6 +1,6 @@
 from database.db_connect import connect
 import classes.person_builder as pb #import StudentBuilder, InstructorBuilder
-from classes.person_classes import Student, Instructor
+import classes.person_classes as pc #import Student, Instructor
 from classes.course_classes import Course, Section
 from classes.course_builder import CourseBuilder, SectionBuilder
 from datetime import datetime
@@ -66,7 +66,7 @@ def make_student(studentid):
 			pastGrades[term].append(list((courseid, title, sectionid, grade)))
 
 	sb = pb.StudentBuilder()
-	sb.person = Student()
+	sb.person = pc.Student()
 	sb.getId(studentid)
 	sb.getFirstname(firstname)
 	sb.getLastname(lastname)
@@ -111,7 +111,7 @@ def make_students():
 				pastGrades[term].append(list((courseid, title, sectionid, grade)))
 
 		sb = pb.StudentBuilder()
-		sb.person = Student()
+		sb.person = pc.Student()
 		sb.getId(studentid)
 		sb.getFirstname(firstname)
 		sb.getLastname(lastname)
@@ -138,7 +138,7 @@ def make_instructors(conn, instructor_query):
 		password = instr[5]
 
 		ib = pb.InstructorBuilder()
-		ib.person = Instructor()
+		ib.person = pc.Instructor()
 		ib.getId(instrid)
 		ib.getFirstname(firstname)
 		ib.getLastname(lastname)

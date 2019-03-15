@@ -1,6 +1,6 @@
 import pytest
 from classes.course_classes import Course, Section
-from classes.registration_mediator import RegistrationMediator
+import classes.registration_mediator as rm #import RegistrationMediator
 from classes.course_builder import CourseBuilder, SectionBuilder
 
 # Test section builder and generate test_section
@@ -105,7 +105,7 @@ def test_course_dropCourse():
 	assert test_course.enrollment == 1
 
 def test_course_addMediator():
-	test_mediator = RegistrationMediator()
+	test_mediator = rm.RegistrationMediator()
 	test_course.addMediator(test_mediator)
 	assert test_course._reg_mediator == test_mediator
 

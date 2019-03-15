@@ -1,13 +1,13 @@
 # This document contains unit for person-related classes
 
 import pytest
-from classes.person_classes import *
+import classes.person_classes as pc #import Student, Instructor, 
 from classes.person_builder import StudentBuilder, InstructorBuilder
 import classes.registration_mediator as rm
 from classes.course_classes import Course
 
 ib = InstructorBuilder()
-ib.person = Instructor()
+ib.person = pc.Instructor()
 ib.getFirstname("A")
 ib.getLastname("Professor")
 ib.getUsername("aprofessor")
@@ -16,11 +16,11 @@ ib.getId(200000)
 ib.getDeptCode(1)
 test_instructor = ib.getPerson()
 
-test_faculty = Faculty()
+test_faculty = pc.Faculty()
 
 # Tests for student builder and creation of test object
 sb = StudentBuilder()
-sb.person = Student()
+sb.person = pc.Student()
 
 sb.getFirstname("Claire")
 def test_sb_firstname():

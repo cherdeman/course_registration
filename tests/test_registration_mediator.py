@@ -2,7 +2,7 @@
 
 import pytest
 from classes.person_builder import StudentBuilder
-from classes.person_classes import *
+from classes.person_classes import Student, Instructor
 from classes.course_classes import Course
 from classes.registration_mediator import RegistrationMediator
 from classes.course_builder import CourseBuilder, SectionBuilder
