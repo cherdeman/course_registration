@@ -15,10 +15,12 @@ class Course:
 	def addCourse(self, studentid, db = True):
 		self.section.addSection(studentid, self._coursenum, db)
 		self.updateEnrollment()
+		self._reg_mediator = None
 
 	def dropCourse(self, studentid, db = True):
 		self.section.dropSection(studentid, db)
 		self.updateEnrollment()
+		self._reg_mediator = None
 
 	def addMediator(self, reg_mediator):
 		if self._reg_mediator is None:
@@ -42,7 +44,7 @@ class Section:
 		self.time = None
 		self.location = None
 
-	def addSection(self, studentid, courseid, db):
+	def addSection(self, studentid, courseid, db = True):
 		if self.enrollment is None:
 			self.enrollment = []
 		self.enrollment.append(studentid)
@@ -50,7 +52,7 @@ class Section:
 			value = "("+ str(studentid) + "," + str(courseid) + "," + str(self._sectionid) + ",'" + self.term + "')"
 			add(connect(), 'grades', '(studentid, courseid, sectionid, term)',  value)
 
-	def dropSection(self, studentid, db):
+	def dropSection(self, studentid, db = True):
 		self.enrollment.remove(studentid)
 		if db:
 			delete(connect(), 'grades', 'studentid', studentid)

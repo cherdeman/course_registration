@@ -119,11 +119,11 @@ grade_fields = """studentid int 		NOT NULL,
 				  PRIMARY KEY (studentid, courseid, term)
 			   """
 grade_cols = '(studentid, courseid, sectionid, term, grade)'
-grade_data = """(100001, 1100, 10, "fall18", 'A'),
-				(100001, 2100, 10, "fall18", 'B+'),
-				(100002, 1100, 10, "fall18", 'B'),
-				(100002, 2100, 10, "fall18", 'A-'),
-				(100002, 2100, 10, "spr19", NULL)
+grade_data = """(100001, 1100, 10, "fall2018", 'A'),
+				(100001, 2100, 10, "fall2018", 'B+'),
+				(100002, 1100, 10, "fall2018", 'B'),
+				(100002, 2100, 10, "fall2018", 'A-'),
+				(100002, 2100, 10, "spr2019", NULL)
 			 """
 
 generate_table(grade_name, grade_fields, grade_cols, grade_data)

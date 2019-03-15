@@ -23,7 +23,6 @@ def update(conn, table, col, val, where_field, where_val):
 
 def add(conn, table, cols, values):
     add = "INSERT INTO {} {} VALUES {};".format(table, cols, values)
-    print(add   )
     conn.execute(add)
 
 def delete(conn, table, where_col, where_val):

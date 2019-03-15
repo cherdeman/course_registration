@@ -26,36 +26,58 @@ class RegistrationMediator():
 		return False
 
 	def addCourse(self):
+		# Check conditions
+		self.checkRegistration()
+		self.checkCourseHistory()
+		# already taken
+		# meet pre-requisites
 		confirm = input("Are you sure you want to add {}? (y/n)".format(self._course.title))
 		if confirm == "y":
 			# Only one section in this system, would need to be built out
 			self._course.addCourse(self._student._studentid)
 			self._student._add(self._course._coursenum)
 			print("You are enrolled in {}.".format(self._course.title))
-			self._course._reg_mediator = None
-			self._student._reg_mediator = None
+			#self._course._reg_mediator = None
+			#self._student._reg_mediator = None
 		else:
 			print("Ok, you are NOT be enrolled in {}.".format(self._course.title))
-			self._course._reg_mediator = None
-			self._student._reg_mediator = None
+			#self._course._reg_mediator = None
+			#self._student._reg_mediator = None
+			return
+
+	def checkRegistration(self):
+		if self._course._coursenum in self._student.currentCourses:
+			print("You are already registered for {}".format(self._course.title))
+			return
+
+	def checkCourseHistory(self):
+		past_courses = []
+		for term in self._student.pastGrades.values():
+			for course in term:
+				past_courses.append(course)
+
+		if self._course._coursenum in all_courses:
+			print("You have already taken {} and cannot re-register.".format(self._course.title))
 			return
 
 	def dropCourse(self):
 		# check that the student is enrolled in the course
-		self.checkEnrollment()
+		check = self.checkEnrollment()
 
-		confirm = input("Are you sure you want to drop {}? (y/n)".format(self._course.title))
-		if confirm == "y":
-			self._student._drop(self._course._coursenum)
-			self._course.dropCourse(self._student._studentid)
-			print("You have dropped {}.".format(self._course.title))
-			self._course._reg_mediator = None
-			self._student._reg_mediator = None
+		if check:
+			confirm = input("Are you sure you want to drop {}? (y/n)".format(self._course.title))
+			if confirm == "y":
+				self._student._drop(self._course._coursenum)
+				self._course.dropCourse(self._student._studentid)
+				print("You have dropped {}.".format(self._course.title))
+				#self._course._reg_mediator = None
+				#self._student._reg_mediator = None
 		
 
 	def checkEnrollment(self):
 		if self._course._coursenum not in self._student.currentCourses:
 			print("You are not enrolled in {} so cannot drop it.".format(self._course.title))
-			self._course._reg_mediator = None
-			self._student._reg_mediator = None
-			return
+			#self._course._reg_mediator = None
+			#self._student._reg_mediator = None
+			return False
+		return True

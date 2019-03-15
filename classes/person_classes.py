@@ -65,10 +65,15 @@ class Student(Person):
 		   self.currentCourses is None or len(self.currentCourses) < 3: # leave as 3 for now, should be a var and based on FT/PT
 		   self._reg_mediator.addCourse()
 
-	def dropCourse(self, course_obj):
+		self._reg_mediator = None
+
+	def dropCourse(self, course_obj, drop_all = False):
 		self.addMediator(course_obj)
 
 		self._reg_mediator.dropCourse()
+
+		if drop_all:
+			self._reg_mediator = None
 
 	def _add(self, courseid):
 		if self.currentCourses is None:
@@ -79,8 +84,15 @@ class Student(Person):
 		self.currentCourses.remove(courseid)
 
 	def dropAllCourses(self, courses):
-		for coursenum in self.currentCourses:
+		courselist = self.currentCourses[:]
+		for coursenum in courselist:
+			coursenum = int(coursenum)
+			print("course to drop", coursenum)
 			self.dropCourse(courses[coursenum])
+			print("remaining list", self.currentCourses)
+			print("full list", courselist)
+
+		self._reg_mediator = None
 
 	def viewCourses(self):
 		if len(self.currentCourses) == 0:
