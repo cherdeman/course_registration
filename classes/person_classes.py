@@ -58,8 +58,8 @@ class Student(Person):
 		if db:
 			update(connect(), 'student', 'password', "'" + self._password + "'", 'studentid', self._studentid)
 
-	def addCourse(self, course_obj):
-		self.addMediator(course_obj)
+	def addCourse(self, courseid):
+		self.addMediator(courseid)
 
 		if self._reg_mediator.isCourseAvailable() and \
 		   self.currentCourses is None or len(self.currentCourses) < 3: # leave as 3 for now, should be a var and based on FT/PT
@@ -67,8 +67,8 @@ class Student(Person):
 
 		self._reg_mediator = None
 
-	def dropCourse(self, course_obj, drop_all = False):
-		self.addMediator(course_obj)
+	def dropCourse(self, courseid, drop_all = False):
+		self.addMediator(courseid)
 
 		self._reg_mediator.dropCourse()
 
@@ -83,12 +83,12 @@ class Student(Person):
 	def _drop(self, courseid):
 		self.currentCourses.remove(courseid)
 
-	def dropAllCourses(self, courses):
+	def dropAllCourses(self):
 		courselist = self.currentCourses[:]
 		for coursenum in courselist:
 			coursenum = int(coursenum)
 			print("course to drop", coursenum)
-			self.dropCourse(courses[coursenum])
+			self.dropCourse(coursenum)
 			print("remaining list", self.currentCourses)
 			print("full list", courselist)
 
@@ -113,7 +113,7 @@ class Student(Person):
 				print(tabulate(self.pastGrades[term], header))
 				print()
 			
-	def addMediator(self, course_obj):
+	def addMediator(self, courseid):
 		# instantiate mediator
 		reg_mediator = rm.RegistrationMediator()
 		
@@ -123,7 +123,7 @@ class Student(Person):
 
 		# register course/student with mediator
 		self._reg_mediator.getStudent(self)
-		self._reg_mediator.getCourse(course_obj)
+		self._reg_mediator.getCourse(courseid)
 
 
 class Instructor(Person):

@@ -9,10 +9,10 @@ class Login:
 		student_id = self.verifyCredentials()
 		if self.verified:
 			students = make_students()
-			courses = make_courses()
+			#courses = make_courses()
 			student = students[student_id]
 			print("Hi {}, welcome to REGIE!".format(student.firstname))
-			self.provideOptions(student, courses)
+			self.provideOptions(student)
 		else:
 			return
 
@@ -83,7 +83,7 @@ class Login:
 		self.verified = True
 		return student_id
 
-	def provideOptions(self, student, courses):
+	def provideOptions(self, student): #courses
 		active = True
 
 		while active:
@@ -101,14 +101,14 @@ class Login:
 				student.changePassword()
 			elif option == 2:
 				coursenum = int(input("Enter the course number: "))
-				course = courses[coursenum]
-				student.addCourse(course)
+				#course = courses[coursenum]
+				student.addCourse(coursenum)
 			elif option == 3:
 				coursenum = int(input("Enter the course number: "))
-				course = courses[coursenum]
-				student.dropCourse(course)
+				#course = courses[coursenum]
+				student.dropCourse(coursenum)
 			elif option == 4:
-				student.dropAllCourses(courses)
+				student.dropAllCourses()
 			elif option == 5:
 				student.viewGrades()
 			elif option == 6:

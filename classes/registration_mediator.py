@@ -1,5 +1,5 @@
 	# Registration Mediator
-#import person_classes as p
+import startup as s
 #import course_classes as c
 
 class RegistrationMediator():
@@ -12,7 +12,10 @@ class RegistrationMediator():
 		if self._student is None:
 			self._student = student
 
-	def getCourse(self, course):
+	def getCourse(self, courseid):
+		# Instatiate course object
+		course = s.make_course(courseid)
+
 		# Add mediator to course prior to registration
 		course.addMediator(self)
 
@@ -56,7 +59,7 @@ class RegistrationMediator():
 			for course in term:
 				past_courses.append(course)
 
-		if self._course._coursenum in all_courses:
+		if self._course._coursenum in past_courses:
 			print("You have already taken {} and cannot re-register.".format(self._course.title))
 			return
 
