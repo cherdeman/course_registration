@@ -88,21 +88,24 @@ class Student(Person):
 		# 	self._reg_mediator.dropCourse()
 
 	def viewCourses(self):
-		course_input = ', '.join([str(coursenum) for coursenum in self.currentCourses])
-		print(course_input)
-		print("You are currently enrolled in: ")
-		view_courses(connect(), course_input)
+		if len(self.currentCourses) == 0:
+			print("You are not registered for any courses this term.")
+		else:
+			course_input = ', '.join([str(coursenum) for coursenum in self.currentCourses])
+			print(course_input)
+			print("You are currently enrolled in: ")
+			view_courses(connect(), course_input)
 
 	def viewGrades(self):
 		header = ["Course ID Num", "Title", "Section ID Num", "Grade"]
 		if len(self.pastGrades) == 0:
 			print("You have no past grades.")
 		else:
-			print("You have grades for the following terms: {}".format(list(self.pastGrades.keys())))
-			term = input("Enter the term of interest to view grades: ")
-			print(tabulate(self.pastGrades[term], header))
+			for term, grades in self.pastGrades.items():
+				print("Term: {}".format(term))
+				print(tabulate(self.pastGrades[term], header))
+				print()
 			
-
 	def addMediator(self, course_obj):
 		# instantiate mediator
 		reg_mediator = rm.RegistrationMediator()
