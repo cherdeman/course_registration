@@ -1,5 +1,5 @@
 	# Registration Mediator
-import startup as s
+import startup_functions as s
 #import course_classes as c
 
 class RegistrationMediator():
