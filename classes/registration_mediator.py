@@ -31,8 +31,9 @@ class RegistrationMediator():
 	def addCourse(self):
 		# Check conditions
 		self.checkRegistration()
-		self.checkCourseHistory()
-		self.checkPrereqs()
+		past_courses = self.getPastCourses()
+		self.checkCourseHistory(past_courses)
+		self.checkPrereqs(past_courses)
 		
 		confirm = input("Are you sure you want to add {}? (y/n)".format(self._course.title))
 		if confirm == "y":
@@ -48,11 +49,12 @@ class RegistrationMediator():
 		past_courses = []
 		for term in self._student.pastGrades.values():
 			for course in term:
-				past_courses.append(course)
+				courseid = course[0]
+				past_courses.append(courseid)
 
 		return past_courses
 
-	def checkRegistration(self, past_courses):
+	def checkRegistration(self):
 		if self._course._coursenum in self._student.currentCourses:
 			print("You are already registered for {}".format(self._course.title))
 			return
@@ -63,9 +65,10 @@ class RegistrationMediator():
 			return
 
 	def checkPrereqs(self, past_courses):
-		taken = [course for course in self._course.prereqs if course in poast_courses]
-		if len(taken) != len(past_courses):
+		taken = [course for course in self._course.prereqs if course in past_courses]
+		if len(taken) != len(self._course.prereqs):
 			print("You have not completed all of the pre-requisites to register for {}.".format(self._course.title))
+			return
 
 
 	def dropCourse(self):

@@ -1,5 +1,5 @@
 from database.db_connect import connect
-from startup_functions import make_students, make_courses
+from startup_functions import make_students#, make_courses
 
 class Login:
 	def __init__(self):

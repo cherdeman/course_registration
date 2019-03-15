@@ -37,8 +37,8 @@ def main():
 	print("made students {}".format(students.keys()))
 	instructors = s.make_instructors(conn, select_query.format('instructor'))
 	print("made instructors {}".format(instructors.keys()))
-	courses = s.make_courses()
-	print("made courses {}".format(courses.keys()))
+	#courses = s.make_courses()
+	#print("made courses {}".format(courses.keys()))
 
 if __name__ == "__main__":
 	main()

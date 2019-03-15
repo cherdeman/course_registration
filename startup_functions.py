@@ -153,8 +153,6 @@ def make_instructors(conn, instructor_query):
 def make_course(courseid):
 	conn = connect()
 	query = select_query + where_clause
-	print("query")
-	print(query)
 	rs = conn.execute(query.format('course', 'courseid', courseid))
 	course = rs.fetchone()
 
@@ -174,29 +172,29 @@ def make_course(courseid):
 	
 	return c
 
-def make_courses():
-	conn = connect()
-	rs = conn.execute(select_query.format('course'))
-	courses = rs.fetchall()
+# def make_courses():
+# 	conn = connect()
+# 	rs = conn.execute(select_query.format('course'))
+# 	courses = rs.fetchall()
 
-	course_obj = {}
-	for course in courses:
-		courseid = course[0]
-		dept = course[1]
-		title = course[2]
+# 	course_obj = {}
+# 	for course in courses:
+# 		courseid = course[0]
+# 		dept = course[1]
+# 		title = course[2]
 
-		cb = CourseBuilder()
-		cb.course = Course()
-		cb.getId(courseid)
-		cb.getTitle(title)
-		cb.getDepartment(dept)
-		cb.getSections(make_sections(conn, section_query, enrollment_query, courseid, "'"+current_term()+"'"))
-		cb.getEnrollmentUpdates()
-		cb.getPrereqs(prereqs(conn, cb.course._coursenum))
-		c = cb.getItem()
-		course_obj[c._coursenum] = c
+# 		cb = CourseBuilder()
+# 		cb.course = Course()
+# 		cb.getId(courseid)
+# 		cb.getTitle(title)
+# 		cb.getDepartment(dept)
+# 		cb.getSections(make_sections(conn, section_query, enrollment_query, courseid, "'"+current_term()+"'"))
+# 		cb.getEnrollmentUpdates()
+# 		cb.getPrereqs(prereqs(conn, cb.course._coursenum))
+# 		c = cb.getItem()
+# 		course_obj[c._coursenum] = c
 
-	return course_obj
+# 	return course_obj
 
 def make_sections(conn, section_query, enrollment_query, courseid, current_term):
 	rs = conn.execute(section_query.format(courseid, current_term))
