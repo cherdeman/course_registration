@@ -77,15 +77,10 @@ class Student(Person):
 
 	def _drop(self, courseid):
 		self.currentCourses.remove(courseid)
-		if len(self.currentCourses) == 0:
-			self.currentCourses = None
 
 	def dropAllCourses(self, courses):
 		for coursenum in self.currentCourses:
 			self.dropCourse(courses[coursenum])
-
-		# for course in self.currentCourses:
-		# 	self._reg_mediator.dropCourse()
 
 	def viewCourses(self):
 		if len(self.currentCourses) == 0:
@@ -115,8 +110,8 @@ class Student(Person):
 			self._reg_mediator = reg_mediator
 
 		# register course/student with mediator
-		reg_mediator.getStudent(self)
-		reg_mediator.getCourse(course_obj)
+		self._reg_mediator.getStudent(self)
+		self._reg_mediator.getCourse(course_obj)
 
 
 class Instructor(Person):

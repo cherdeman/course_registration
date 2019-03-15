@@ -163,7 +163,7 @@ def enrollment(conn, enrollment_query, courseid, term, sectionid):
 	enrollment = rs.fetchall()
 
 	for studentid in enrollment:
-		enrolled.append(studentid)
+		enrolled.append(studentid[0])
 
 	return enrolled
 
