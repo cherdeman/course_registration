@@ -34,6 +34,9 @@ class CourseBuilder(Builder):
 		self.course.updateEnrollment()
 		self.course.enrollmentLimit()
 
+	def getPrereqs(self, prereqs):
+		self.course.prereqs = prereqs
+
 	def getItem(self):
 		return self.course
 

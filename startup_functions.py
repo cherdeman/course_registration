@@ -169,6 +169,7 @@ def make_course(courseid):
 	cb.getDepartment(dept)
 	cb.getSections(make_sections(conn, section_query, enrollment_query, courseid, "'"+current_term()+"'"))
 	cb.getEnrollmentUpdates()
+	cb.getPrereqs(prereqs(conn, cb.course._coursenum))
 	c = cb.getItem()
 	
 	return c
@@ -191,6 +192,7 @@ def make_courses():
 		cb.getDepartment(dept)
 		cb.getSections(make_sections(conn, section_query, enrollment_query, courseid, "'"+current_term()+"'"))
 		cb.getEnrollmentUpdates()
+		cb.getPrereqs(prereqs(conn, cb.course._coursenum))
 		c = cb.getItem()
 		course_obj[c._coursenum] = c
 
@@ -224,6 +226,18 @@ def make_sections(conn, section_query, enrollment_query, courseid, current_term)
 		s = sb.getItem()
 
 	return s
+
+def prereqs(conn, courseid):
+	prereqs = []
+	query = select_query + where_clause
+	rs = conn.execute(query.format('prerequisites', 'courseid', courseid))
+
+	prerequisites = rs.fetchall()
+	for prereq in prerequisites:
+		prereqid = prereq[1]
+		prereqs.append(prereqid)
+
+	return prereqs
 
 def enrollment(conn, enrollment_query, courseid, term, sectionid):
 	enrolled = []

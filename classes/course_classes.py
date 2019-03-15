@@ -11,6 +11,7 @@ class Course:
 		self.enrollment = None
 		self.enrollment_limit = None
 		self.section = None
+		self.prereqs = None
 
 	def addCourse(self, studentid, db = True):
 		self.section.addSection(studentid, self._coursenum, db)

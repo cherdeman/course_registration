@@ -32,36 +32,41 @@ class RegistrationMediator():
 		# Check conditions
 		self.checkRegistration()
 		self.checkCourseHistory()
-		# already taken
-		# meet pre-requisites
+		self.checkPrereqs()
+		
 		confirm = input("Are you sure you want to add {}? (y/n)".format(self._course.title))
 		if confirm == "y":
 			# Only one section in this system, would need to be built out
 			self._course.addCourse(self._student._studentid)
 			self._student._add(self._course._coursenum)
 			print("You are enrolled in {}.".format(self._course.title))
-			#self._course._reg_mediator = None
-			#self._student._reg_mediator = None
 		else:
 			print("Ok, you are NOT be enrolled in {}.".format(self._course.title))
-			#self._course._reg_mediator = None
-			#self._student._reg_mediator = None
 			return
 
-	def checkRegistration(self):
-		if self._course._coursenum in self._student.currentCourses:
-			print("You are already registered for {}".format(self._course.title))
-			return
-
-	def checkCourseHistory(self):
+	def getPastCourses(self):
 		past_courses = []
 		for term in self._student.pastGrades.values():
 			for course in term:
 				past_courses.append(course)
 
+		return past_courses
+
+	def checkRegistration(self, past_courses):
+		if self._course._coursenum in self._student.currentCourses:
+			print("You are already registered for {}".format(self._course.title))
+			return
+
+	def checkCourseHistory(self, past_courses):
 		if self._course._coursenum in past_courses:
 			print("You have already taken {} and cannot re-register.".format(self._course.title))
 			return
+
+	def checkPrereqs(self, past_courses):
+		taken = [course for course in self._course.prereqs if course in poast_courses]
+		if len(taken) != len(past_courses):
+			print("You have not completed all of the pre-requisites to register for {}.".format(self._course.title))
+
 
 	def dropCourse(self):
 		# check that the student is enrolled in the course
