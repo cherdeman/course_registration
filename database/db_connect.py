@@ -49,3 +49,4 @@ def view_courses(conn, course_input):
         printable.append([cnum, dept, title, description])
 
     print(tabulate(printable, headers))
+

@@ -110,7 +110,7 @@ class Login:
 			elif option == 4:
 				student.dropAllCourses(courses)
 			elif option == 5:
-				print("This option doesn't work yet")
+				student.viewGrades()
 			elif option == 6:
 				student.viewCourses()
 			elif option == 7:

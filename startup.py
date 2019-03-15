@@ -12,8 +12,10 @@ select_query = """
 				"""
 
 grades_query = """
-				SELECT * 
-				FROM grades
+				SELECT g.courseid, c.title, g.sectionid, g.term, g.grade
+				FROM grades g
+				JOIN course c
+				USING(courseid)
 				WHERE studentid = {}
 				"""
 
@@ -50,7 +52,8 @@ def make_students():
 		crs = conn.execute(grades_query.format(studentid))
 		courses = crs.fetchall()
 		for course in courses:
-			courseid = course[1]
+			courseid = course[0]
+			title = course[1]
 			sectionid = course[2]
 			term = course[3]
 			grade = course[4]
@@ -60,7 +63,7 @@ def make_students():
 			else:
 				if term not in pastGrades:
 					pastGrades[term] = []
-				pastGrades[term].append((courseid, sectionid, grade))
+				pastGrades[term].append(list((courseid, title, sectionid, grade)))
 
 		sb = StudentBuilder()
 		sb.person = Student()

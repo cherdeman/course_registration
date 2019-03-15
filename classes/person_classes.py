@@ -3,6 +3,7 @@
 from abc import ABC, abstractmethod
 from database.db_connect import connect, update, view_courses
 import classes.registration_mediator as rm
+from tabulate import tabulate
 
 class Person(ABC):
 	"""
@@ -92,8 +93,15 @@ class Student(Person):
 		print("You are currently enrolled in: ")
 		view_courses(connect(), course_input)
 
-	def viewGrades():
-		pass
+	def viewGrades(self):
+		header = ["Course ID Num", "Title", "Section ID Num", "Grade"]
+		if len(self.pastGrades) == 0:
+			print("You have no past grades.")
+		else:
+			print("You have grades for the following terms: {}".format(list(self.pastGrades.keys())))
+			term = input("Enter the term of interest to view grades: ")
+			print(tabulate(self.pastGrades[term], header))
+			
 
 	def addMediator(self, course_obj):
 		# instantiate mediator
