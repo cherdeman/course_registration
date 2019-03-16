@@ -106,7 +106,7 @@ def test_course_dropCourse():
 
 def test_course_addMediator():
 	test_mediator = rm.RegistrationMediator()
-	test_course.addMediator(test_mediator)
+	test_course._addMediator(test_mediator)
 	assert test_course._reg_mediator == test_mediator
 
 existing_classes = [test_course, test_section] #, Section(), Lab(), Building(), Room(), TimeSlot(), Search()]

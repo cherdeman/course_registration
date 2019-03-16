@@ -1,5 +1,5 @@
 from database.db_connect import connect
-from startup_functions import make_students#, make_courses\
+from classes.make_people import make_students#, make_courses\
 from classes.search_class import Search
 
 class Login:
@@ -7,9 +7,10 @@ class Login:
 		self.verified = False
 
 	def control(self):
+		students = make_students()
+		#courses = make_courses()
 		student_id = self.verifyCredentials()
 		if self.verified:
-			students = make_students()
 			#courses = make_courses()
 			student = students[student_id]
 			print("Hi {}, welcome to REGIE!".format(student.firstname))

@@ -2,7 +2,8 @@
 import database.db_connect as db
 from tabulate import tabulate
 from sqlalchemy import text
-from startup_functions import current_term
+#fix this
+from classes.make_people import current_term
 
 class Search():
 	# __instance = None

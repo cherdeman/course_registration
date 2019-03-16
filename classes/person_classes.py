@@ -146,10 +146,10 @@ class Instructor(Person):
 		super().changePassword()
 		update(connect(), 'instructor', 'password', "'" + self._password + "'", 'instructorid', self._instructorid)
 
-	def viewRoster():
+	def viewRoster(self):
 		pass
 
-	def updateGrades():
+	def updateGrades(self):
 		pass
 
 

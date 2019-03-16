@@ -106,7 +106,7 @@ def test_instructor_code():
 	assert test_instructor.dept_code == 1
 
 existing_classes = [test_student, test_instructor]
-person_subclasses = [Student, Instructor]
+person_subclasses = [pc.Student, pc.Instructor]
 
 # Parametrized tests for all person  classes
 @pytest.mark.parametrize('test_class', existing_classes)
