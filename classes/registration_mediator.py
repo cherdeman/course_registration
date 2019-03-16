@@ -1,5 +1,5 @@
 # Registration Mediator
-import classes.make_courses as mc #import make_course
+from classes.make_courses import make_course
 
 class RegistrationMediator():
 	"""
@@ -15,9 +15,12 @@ class RegistrationMediator():
 		if self._student is None:
 			self._student = student
 
-	def getCourse(self, courseid):
+	def getCourse(self, courseid, test = False):
 		# Instatiate course object
-		course = mc.make_course(courseid)
+		if test:
+			course = courseid
+		else:
+			course = make_course(courseid)
 
 		# Add mediator to course prior to registration
 		course._addMediator(self)

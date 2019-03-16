@@ -25,6 +25,8 @@ cb.getId(1)
 cb.getTitle("Object Oriented Programming")
 cb.getDepartment("CS")
 cb.getSections({})
+#cb.getEnrollmentUpdates()
+cb.getPrereqs([0])
 test_course = cb.getItem()
 
 test_mediator = RegistrationMediator()
@@ -41,7 +43,7 @@ def test_mediator_getStudent():
 	assert test_mediator._student == test_student
 
 def test_mediator_getCourse():
-	test_mediator.getCourse(test_course)
+	test_mediator.getCourse(test_course, True)
 	assert test_mediator._course == test_course
 
 def test_student_mediator():
@@ -50,6 +52,6 @@ def test_student_mediator():
 def test_course_mediator():
 	test_course._reg_mediator == test_mediator
 
-def test_course_isCourseAvailable():
-	assert test_mediator.isCourseAvailable()
+# def test_course_isCourseAvailable():
+# 	assert test_mediator.isCourseAvailable()
 

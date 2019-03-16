@@ -1,13 +1,12 @@
 # This document contains unit for person-related classes
-
 import pytest
-import classes.person_classes as pc #import Student, Instructor, 
+from classes.person_classes import Student, Instructor, Person, Faculty
 from classes.person_builder import StudentBuilder, InstructorBuilder
 import classes.registration_mediator as rm
 from classes.course_classes import Course
 
 ib = InstructorBuilder()
-ib.person = pc.Instructor()
+ib.person = Instructor()
 ib.getFirstname("A")
 ib.getLastname("Professor")
 ib.getUsername("aprofessor")
@@ -16,11 +15,11 @@ ib.getId(200000)
 ib.getDeptCode(1)
 test_instructor = ib.getPerson()
 
-test_faculty = pc.Faculty()
+test_faculty = Faculty()
 
 # Tests for student builder and creation of test object
 sb = StudentBuilder()
-sb.person = pc.Student()
+sb.person = Student()
 
 sb.getFirstname("Claire")
 def test_sb_firstname():
@@ -79,7 +78,7 @@ def test_student_add():
 
 def test_student_drop():
 	test_student._drop(1234)
-	assert test_student.currentCourses is None
+	assert test_student.currentCourses == []
 
 # def test_student_addMediator():
 # 	test_course = Course(1, "Object Oriented Programming", "CS", 30)
@@ -106,7 +105,7 @@ def test_instructor_code():
 	assert test_instructor.dept_code == 1
 
 existing_classes = [test_student, test_instructor]
-person_subclasses = [pc.Student, pc.Instructor]
+person_subclasses = [Student, Instructor]
 
 # Parametrized tests for all person  classes
 @pytest.mark.parametrize('test_class', existing_classes)
