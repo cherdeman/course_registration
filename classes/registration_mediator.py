@@ -22,11 +22,17 @@ class RegistrationMediator():
 		else:
 			course = make_course(courseid)
 
-		# Add mediator to course prior to registration
-		course._addMediator(self)
+		if course is None:
+			print("I'm sorry, that is not a valid course number.")
+			return False
+		else:	
+			# Add mediator to course prior to registration
+			course._addMediator(self)
 
-		if self._course is None:
-			self._course = course
+			if self._course is None:
+				self._course = course
+			
+			return True
 
 	def isCourseAvailable(self):
 		# check course availability 

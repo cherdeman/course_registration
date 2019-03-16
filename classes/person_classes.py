@@ -64,18 +64,20 @@ class Student(Person):
 
 	# Main add/drop functions
 	def addCourse(self, courseid):
-		self._addMediator(courseid)
+		success = self._addMediator(courseid)
 
-		if self._reg_mediator.isCourseAvailable() and \
-		   self.currentCourses is None or len(self.currentCourses) < 3: # leave as 3 for now, should be a var
-		   self._reg_mediator.addCourse()
+		if success:
+			if self._reg_mediator.isCourseAvailable() and \
+			   self.currentCourses is None or len(self.currentCourses) < 3: # leave as 3 for now, should be a var
+			   self._reg_mediator.addCourse()
 
 		self._reg_mediator = None
 
 	def dropCourse(self, courseid, drop_all = False):
-		self._addMediator(courseid)
+		success = self._addMediator(courseid)
 
-		self._reg_mediator.dropCourse()
+		if success:
+			self._reg_mediator.dropCourse()
 
 		if drop_all:
 			self._reg_mediator = None
@@ -132,7 +134,7 @@ class Student(Person):
 
 		# register course/student with mediator
 		self._reg_mediator.getStudent(self)
-		self._reg_mediator.getCourse(courseid)
+		return self._reg_mediator.getCourse(courseid)
 
 
 class Instructor(Person):

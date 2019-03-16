@@ -5,7 +5,7 @@ from sqlalchemy import text
 from utils.functions import current_term
 
 class Search():
-
+	"""Search functionality and controler"""
 	def __init__(self):
 		self.conn = db.connect()
 		
@@ -13,8 +13,9 @@ class Search():
 		search = True
 		while search:
 			where_clause = self._option()
-			query = self._generate_query(where_clause)
-			self._search(query)
+			if where_clause is not None:
+				query = self._generate_query(where_clause)
+				self._search(query)
 			cont = input("Would you like to search again? (y/n): ")	
 			if cont == "n":
 				search = False
@@ -80,11 +81,14 @@ class Search():
 			print("{}) {}".format(i, option_dict[i][0]))
 
 		option = int(input("Please enter the number of the field you'd like to select: "))
-		term = input("Please enter your search term: ")
-
 		if option not in range(1, 6):
 			print("I'm sorry, I don't recognize that input.")
-		elif option_dict[option][1] == int:
+			return None
+		
+		term = input("Please enter your search term: ")
+
+		
+		if option_dict[option][1] == int:
 			where = "AND courseid = {}".format(int(term))
 		else:
 			if option == 5:

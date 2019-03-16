@@ -31,19 +31,22 @@ def make_course(courseid):
 	rs = conn.execute(query.format('course', 'courseid', courseid))
 	course = rs.fetchone()
 
-	courseid = course[0]
-	dept = course[1]
-	title = course[2]
+	if course is not None:
+		courseid = course[0]
+		dept = course[1]
+		title = course[2]
 
-	cb = CourseBuilder()
-	cb.course = Course()
-	cb.getId(courseid)
-	cb.getTitle(title)
-	cb.getDepartment(dept)
-	cb.getSections(make_sections(conn, section_query, enrollment_query, courseid, "'"+current_term()+"'"))
-	cb.getEnrollmentUpdates()
-	cb.getPrereqs(prereqs(conn, cb.course._coursenum))
-	c = cb.getItem()
+		cb = CourseBuilder()
+		cb.course = Course()
+		cb.getId(courseid)
+		cb.getTitle(title)
+		cb.getDepartment(dept)
+		cb.getSections(make_sections(conn, section_query, enrollment_query, courseid, "'"+current_term()+"'"))
+		cb.getEnrollmentUpdates()
+		cb.getPrereqs(prereqs(conn, cb.course._coursenum))
+		c = cb.getItem()
+	else:
+		c = None
 	
 	return c
 
