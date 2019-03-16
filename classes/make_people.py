@@ -1,7 +1,7 @@
 from database.db_connect import connect
-import classes.person_builder as pb #import StudentBuilder, InstructorBuilder
-import classes.person_classes as pc #import Student, Instructor
-from datetime import datetime
+from classes.person_builder import StudentBuilder, InstructorBuilder
+from classes.person_classes import Student, Instructor
+from utils.functions import current_term
 
 # Define queries
 select_query = """
@@ -20,61 +20,6 @@ grades_query = """
 				USING(courseid)
 				WHERE studentid = {}
 				"""
-
-section_query = """
-				SELECT * 
-				FROM section
-				WHERE courseid = {} and term = {}
-				"""
-
-enrollment_query = """
-					SELECT DISTINCT studentid
-					FROM grades
-					WHERE courseid = {} and term = {} and sectionid = {}
-					"""
-
-def make_student(studentid):
-	conn = connect()
-	query = select_query + where_clause
-	rs = conn.execute(query.format('student', 'studentid', studentid))
-	student = rs.fetchone()
-
-	studentid = student[0]
-	firstname = student[1]
-	lastname = student[2]
-	username = student[3]
-	password = student[4]
-
-	pastGrades = {}
-	currentCourses = []
-	crs = conn.execute(grades_query.format(studentid))
-	courses = crs.fetchall()
-	for course in courses:
-		courseid = course[0]
-		title = course[1]
-		sectionid = course[2]
-		term = course[3]
-		grade = course[4]
-
-		if grade is None:
-			currentCourses.append(courseid)
-		else:
-			if term not in pastGrades:
-				pastGrades[term] = []
-			pastGrades[term].append(list((courseid, title, sectionid, grade)))
-
-	sb = pb.StudentBuilder()
-	sb.person = pc.Student()
-	sb.getId(studentid)
-	sb.getFirstname(firstname)
-	sb.getLastname(lastname)
-	sb.getUsername(username)
-	sb.getPassword(password)
-	sb.getPastGrades(pastGrades)
-	sb.getCurrentCourses(currentCourses)
-	s = sb.getPerson()
-	
-	return s
 
 def make_students():
 	# call function with no arguments
@@ -108,8 +53,8 @@ def make_students():
 					pastGrades[term] = []
 				pastGrades[term].append(list((courseid, title, sectionid, grade)))
 
-		sb = pb.StudentBuilder()
-		sb.person = pc.Student()
+		sb = StudentBuilder()
+		sb.person = Student()
 		sb.getId(studentid)
 		sb.getFirstname(firstname)
 		sb.getLastname(lastname)
@@ -135,8 +80,8 @@ def make_instructors(conn, instructor_query):
 		username = instr[4]
 		password = instr[5]
 
-		ib = pb.InstructorBuilder()
-		ib.person = pc.Instructor()
+		ib = InstructorBuilder()
+		ib.person = Instructor()
 		ib.getId(instrid)
 		ib.getFirstname(firstname)
 		ib.getLastname(lastname)
@@ -147,13 +92,3 @@ def make_instructors(conn, instructor_query):
 		instructor_obj[i._instructorid] = i
 
 	return instructor_obj
-
-def current_term():
-	year = datetime.now().year
-	month = datetime.now().month
-	if month < 7:
-		term = "spr"
-	else:
-		term = "fall"
-
-	return term + str(year)
