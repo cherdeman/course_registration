@@ -71,6 +71,7 @@ class Login:
 		active = True
 
 		while active:
+			print()
 			print("What would you like to do?")
 			print("1) Change Password")
 			print("2) Add Course")
@@ -80,26 +81,33 @@ class Login:
 			print("6) View Current Courses")
 			print("7) Search Courses")
 			print("8) Exit")
-			option = int(input("Please enter the number of the option you'd like to select: "))
-			if option == 1:
-				student.changePassword()
-			elif option == 2:
-				coursenum = int(input("Enter the course number: "))
-				student.addCourse(coursenum)
-			elif option == 3:
-				coursenum = int(input("Enter the course number: "))
-				student.dropCourse(coursenum)
-			elif option == 4:
-				student.dropAllCourses()
-			elif option == 5:
-				student.viewGrades()
-			elif option == 6:
-				student.viewCourses()
-			elif option == 7:
-				Search().control()
-			else:
-				print("You are exiting the system, bye")
-				active = False
+			option = input("Please enter the number of the option you'd like to select: ")
+			print()
+			if option.isdigit():
+				option = int(option)
+				if option == 1:
+					student.changePassword()
+				elif option == 2:
+					coursenum = int(input("Enter the course number: "))
+					student.addCourse(coursenum)
+				elif option == 3:
+					coursenum = int(input("Enter the course number: "))
+					student.dropCourse(coursenum)
+				elif option == 4:
+					student.dropAllCourses()
+				elif option == 5:
+					student.viewGrades()
+				elif option == 6:
+					student.viewCourses()
+				elif option == 7:
+					Search().control()
+				elif option == 8:
+					print("You are exiting the system, bye")
+					active = False
+				else:
+					print("I'm sorry, I don't recognize that input.")
+			else: 
+				print("I'm sorry, I don't recognize that input.")	
 
 
 def main():

@@ -23,7 +23,7 @@ class Person(ABC):
 	@abstractmethod
 	def changePassword(self):
 		option = input("Would you like to change your password? (y/n) ")
-		if option == 'y':
+		if option.lower() in ['y', 'yes']:
 			old_pass = input("Please enter your old password: ")
 			if old_pass == self._password:
 				new_pass = input("Enter a new password: ")
@@ -33,9 +33,12 @@ class Person(ABC):
 			else:
 				print("I'm sorry, that's incorrect. Try again.")
 				return 
-		else:
+		elif option.lower() in ['n', 'no']:
 			print("Ok, nevermind then.")
 			return 
+		else:
+			print("I'm sorry, I don't recognize that input.")
+			return
 
 class Student(Person):
 	"""

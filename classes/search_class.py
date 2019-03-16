@@ -2,23 +2,12 @@
 import database.db_connect as db
 from tabulate import tabulate
 from sqlalchemy import text
-#fix this
-from classes.make_people import current_term
+from utils.functions import current_term
 
 class Search():
-	# __instance = None
-
-	# def getInstance():
-	# 	if Search._instance == None:
-	# 		Search()
-	# 	return Search.__instance
 
 	def __init__(self):
 		self.conn = db.connect()
-	# 	if Search.__instance != None:
-	# 		return Search.__instance
-	# 	else:
-	# 		Search.__instance = self
 		
 	def control(self):
 		search = True
@@ -93,7 +82,9 @@ class Search():
 		option = int(input("Please enter the number of the field you'd like to select: "))
 		term = input("Please enter your search term: ")
 
-		if option_dict[option][1] == int:
+		if option not in range(1, 6):
+			print("I'm sorry, I don't recognize that input.")
+		elif option_dict[option][1] == int:
 			where = "AND courseid = {}".format(int(term))
 		else:
 			if option == 5:
